@@ -1,0 +1,431 @@
+Class Name: TestClass
+
+Method: IsInvoking
+Return Type: System.Boolean
+Parameters: 
+
+Method: CancelInvoke
+Return Type: System.Void
+Parameters: 
+
+Method: Invoke
+Return Type: System.Void
+Parameters: 
+System.String methodName
+System.Single time
+
+Method: InvokeRepeating
+Return Type: System.Void
+Parameters: 
+System.String methodName
+System.Single time
+System.Single repeatRate
+
+Method: CancelInvoke
+Return Type: System.Void
+Parameters: 
+System.String methodName
+
+Method: IsInvoking
+Return Type: System.Boolean
+Parameters: 
+System.String methodName
+
+Method: StartCoroutine
+Return Type: UnityEngine.Coroutine
+Parameters: 
+System.String methodName
+
+Method: StartCoroutine
+Return Type: UnityEngine.Coroutine
+Parameters: 
+System.String methodName
+System.Object value
+
+Method: StartCoroutine
+Return Type: UnityEngine.Coroutine
+Parameters: 
+System.Collections.IEnumerator routine
+
+Method: StartCoroutine_Auto
+Return Type: UnityEngine.Coroutine
+Parameters: 
+System.Collections.IEnumerator routine
+
+Method: StopCoroutine
+Return Type: System.Void
+Parameters: 
+System.Collections.IEnumerator routine
+
+Method: StopCoroutine
+Return Type: System.Void
+Parameters: 
+UnityEngine.Coroutine routine
+
+Method: StopCoroutine
+Return Type: System.Void
+Parameters: 
+System.String methodName
+
+Method: StopAllCoroutines
+Return Type: System.Void
+Parameters: 
+
+Method: get_useGUILayout
+Return Type: System.Boolean
+Parameters: 
+
+Method: set_useGUILayout
+Return Type: System.Void
+Parameters: 
+System.Boolean value
+
+Method: get_runInEditMode
+Return Type: System.Boolean
+Parameters: 
+
+Method: set_runInEditMode
+Return Type: System.Void
+Parameters: 
+System.Boolean value
+
+Method: get_enabled
+Return Type: System.Boolean
+Parameters: 
+
+Method: set_enabled
+Return Type: System.Void
+Parameters: 
+System.Boolean value
+
+Method: get_isActiveAndEnabled
+Return Type: System.Boolean
+Parameters: 
+
+Method: get_transform
+Return Type: UnityEngine.Transform
+Parameters: 
+
+Method: get_gameObject
+Return Type: UnityEngine.GameObject
+Parameters: 
+
+Method: GetComponent
+Return Type: UnityEngine.Component
+Parameters: 
+System.Type type
+
+Method: GetComponent
+Return Type: T
+Parameters: 
+
+Method: TryGetComponent
+Return Type: System.Boolean
+Parameters: 
+System.Type type
+UnityEngine.Component& component
+
+Method: TryGetComponent
+Return Type: System.Boolean
+Parameters: 
+T& component
+
+Method: GetComponent
+Return Type: UnityEngine.Component
+Parameters: 
+System.String type
+
+Method: GetComponentInChildren
+Return Type: UnityEngine.Component
+Parameters: 
+System.Type t
+System.Boolean includeInactive
+
+Method: GetComponentInChildren
+Return Type: UnityEngine.Component
+Parameters: 
+System.Type t
+
+Method: GetComponentInChildren
+Return Type: T
+Parameters: 
+System.Boolean includeInactive
+
+Method: GetComponentInChildren
+Return Type: T
+Parameters: 
+
+Method: GetComponentsInChildren
+Return Type: UnityEngine.Component[]
+Parameters: 
+System.Type t
+System.Boolean includeInactive
+
+Method: GetComponentsInChildren
+Return Type: UnityEngine.Component[]
+Parameters: 
+System.Type t
+
+Method: GetComponentsInChildren
+Return Type: T[]
+Parameters: 
+System.Boolean includeInactive
+
+Method: GetComponentsInChildren
+Return Type: System.Void
+Parameters: 
+System.Boolean includeInactive
+System.Collections.Generic.List`1[T] result
+
+Method: GetComponentsInChildren
+Return Type: T[]
+Parameters: 
+
+Method: GetComponentsInChildren
+Return Type: System.Void
+Parameters: 
+System.Collections.Generic.List`1[T] results
+
+Method: GetComponentInParent
+Return Type: UnityEngine.Component
+Parameters: 
+System.Type t
+System.Boolean includeInactive
+
+Method: GetComponentInParent
+Return Type: UnityEngine.Component
+Parameters: 
+System.Type t
+
+Method: GetComponentInParent
+Return Type: T
+Parameters: 
+System.Boolean includeInactive
+
+Method: GetComponentInParent
+Return Type: T
+Parameters: 
+
+Method: GetComponentsInParent
+Return Type: UnityEngine.Component[]
+Parameters: 
+System.Type t
+System.Boolean includeInactive
+
+Method: GetComponentsInParent
+Return Type: UnityEngine.Component[]
+Parameters: 
+System.Type t
+
+Method: GetComponentsInParent
+Return Type: T[]
+Parameters: 
+System.Boolean includeInactive
+
+Method: GetComponentsInParent
+Return Type: System.Void
+Parameters: 
+System.Boolean includeInactive
+System.Collections.Generic.List`1[T] results
+
+Method: GetComponentsInParent
+Return Type: T[]
+Parameters: 
+
+Method: GetComponents
+Return Type: UnityEngine.Component[]
+Parameters: 
+System.Type type
+
+Method: GetComponents
+Return Type: System.Void
+Parameters: 
+System.Type type
+System.Collections.Generic.List`1[UnityEngine.Component] results
+
+Method: GetComponents
+Return Type: System.Void
+Parameters: 
+System.Collections.Generic.List`1[T] results
+
+Method: get_tag
+Return Type: System.String
+Parameters: 
+
+Method: set_tag
+Return Type: System.Void
+Parameters: 
+System.String value
+
+Method: GetComponents
+Return Type: T[]
+Parameters: 
+
+Method: CompareTag
+Return Type: System.Boolean
+Parameters: 
+System.String tag
+
+Method: SendMessageUpwards
+Return Type: System.Void
+Parameters: 
+System.String methodName
+System.Object value
+UnityEngine.SendMessageOptions options
+
+Method: SendMessageUpwards
+Return Type: System.Void
+Parameters: 
+System.String methodName
+System.Object value
+
+Method: SendMessageUpwards
+Return Type: System.Void
+Parameters: 
+System.String methodName
+
+Method: SendMessageUpwards
+Return Type: System.Void
+Parameters: 
+System.String methodName
+UnityEngine.SendMessageOptions options
+
+Method: SendMessage
+Return Type: System.Void
+Parameters: 
+System.String methodName
+System.Object value
+
+Method: SendMessage
+Return Type: System.Void
+Parameters: 
+System.String methodName
+
+Method: SendMessage
+Return Type: System.Void
+Parameters: 
+System.String methodName
+System.Object value
+UnityEngine.SendMessageOptions options
+
+Method: SendMessage
+Return Type: System.Void
+Parameters: 
+System.String methodName
+UnityEngine.SendMessageOptions options
+
+Method: BroadcastMessage
+Return Type: System.Void
+Parameters: 
+System.String methodName
+System.Object parameter
+UnityEngine.SendMessageOptions options
+
+Method: BroadcastMessage
+Return Type: System.Void
+Parameters: 
+System.String methodName
+System.Object parameter
+
+Method: BroadcastMessage
+Return Type: System.Void
+Parameters: 
+System.String methodName
+
+Method: BroadcastMessage
+Return Type: System.Void
+Parameters: 
+System.String methodName
+UnityEngine.SendMessageOptions options
+
+Method: get_rigidbody
+Return Type: UnityEngine.Component
+Parameters: 
+
+Method: get_rigidbody2D
+Return Type: UnityEngine.Component
+Parameters: 
+
+Method: get_camera
+Return Type: UnityEngine.Component
+Parameters: 
+
+Method: get_light
+Return Type: UnityEngine.Component
+Parameters: 
+
+Method: get_animation
+Return Type: UnityEngine.Component
+Parameters: 
+
+Method: get_constantForce
+Return Type: UnityEngine.Component
+Parameters: 
+
+Method: get_renderer
+Return Type: UnityEngine.Component
+Parameters: 
+
+Method: get_audio
+Return Type: UnityEngine.Component
+Parameters: 
+
+Method: get_networkView
+Return Type: UnityEngine.Component
+Parameters: 
+
+Method: get_collider
+Return Type: UnityEngine.Component
+Parameters: 
+
+Method: get_collider2D
+Return Type: UnityEngine.Component
+Parameters: 
+
+Method: get_hingeJoint
+Return Type: UnityEngine.Component
+Parameters: 
+
+Method: get_particleSystem
+Return Type: UnityEngine.Component
+Parameters: 
+
+Method: GetInstanceID
+Return Type: System.Int32
+Parameters: 
+
+Method: GetHashCode
+Return Type: System.Int32
+Parameters: 
+
+Method: Equals
+Return Type: System.Boolean
+Parameters: 
+System.Object other
+
+Method: get_name
+Return Type: System.String
+Parameters: 
+
+Method: set_name
+Return Type: System.Void
+Parameters: 
+System.String value
+
+Method: get_hideFlags
+Return Type: UnityEngine.HideFlags
+Parameters: 
+
+Method: set_hideFlags
+Return Type: System.Void
+Parameters: 
+UnityEngine.HideFlags value
+
+Method: ToString
+Return Type: System.String
+Parameters: 
+
+Method: GetType
+Return Type: System.Type
+Parameters: 
+
