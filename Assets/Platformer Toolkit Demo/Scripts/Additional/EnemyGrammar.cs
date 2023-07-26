@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 using System.Linq;
+using System.IO;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class EnemyGrammar : MonoBehaviour
 {
-
     public Sprite squareSprite;  // sprite of all the parts ( we can create an array with different colors just to represent better this
     public Sprite squarewSprite;
     public List<Vector2> relativePositions = new List<Vector2>(); //positions of each part of the enemy
@@ -18,18 +22,35 @@ public class EnemyGrammar : MonoBehaviour
     private List<string> groups = new List<string>(); //contains the different list of groups obtained for the grammar
 
     private float bodiesEnemy = 0f;
-    private int weakspot;
+    private int weakspot { get; set; }
+
+    private string result { get; set; }
+    string projectPath; 
 
     void Start()
     {
-        string result = GenerateString();
-        Debug.Log(result);
+        projectPath = Application.dataPath;
 
-        result = RemoveNumbers(result);
-        Debug.Log(result);
+        if (loadGrammar())
+        {
+            Debug.Log("files loaded");
+        }
+        else 
+        {
+            result = GenerateString();
+            result = RemoveNumbers(result);
+            Weak(result);
+        }
+        
+        //Debug.Log(result);
+
+        //result = "hlre";
+
+        
+        //Debug.Log(result);
         // Debug.Log("hllrrbllrre");
         //generatePositions(result); // hhlrree
-        Weak(result); //generate the weakest point in the enemy
+         //generate the weakest point in the enemy
         generatePositions(result); // grupos
 
         generateBody();     //posiciones y body?
@@ -48,7 +69,7 @@ public class EnemyGrammar : MonoBehaviour
     {
 
         weakspot = Random.Range(0, enemy.Length);
-         
+
 
     }
 
@@ -73,6 +94,43 @@ public class EnemyGrammar : MonoBehaviour
         GenerateStringRecursive(startSymbol, grammarRules, random, stringBuilder);
 
         return stringBuilder.ToString();
+    }
+
+    public void saveGrammar() 
+    {
+        if (File.Exists(projectPath+"/grammarSaved.txt"))
+        {
+            Debug.Log("File already exists. Overwriting...");
+        }
+
+        //instance of data to be saved
+        string dataToSave = result + "|" + weakspot.ToString();
+
+        File.WriteAllText(projectPath + "/grammarSaved.txt", dataToSave);
+        Debug.Log("grammar and weakspot saved to file: " + projectPath + "/grammarSaved.txt");
+    }
+
+
+    public bool loadGrammar() 
+    {
+
+        if (File.Exists(projectPath + "/grammarSaved.txt")) 
+        {    
+            string data = File.ReadAllText(projectPath + "/grammarSaved.txt");
+
+            string[] dataArray = data.Split('|');
+
+            if (dataArray.Length == 2) 
+            {
+                result = dataArray[0];
+                weakspot = int.Parse(dataArray[1]);
+            }
+
+            return true;
+        
+        }
+        Debug.Log("file not found generating grammar...");
+        return false; 
     }
 
     private void GenerateStringRecursive(char symbol, Dictionary<char, string[]> grammarRules, System.Random random, StringBuilder stringBuilder)
@@ -105,7 +163,7 @@ public class EnemyGrammar : MonoBehaviour
 
         string currentGroup = input[0].ToString();
 
-        
+
         for (int i = 1; i < input.Length; i++)
         {
 
@@ -124,14 +182,6 @@ public class EnemyGrammar : MonoBehaviour
 
         groups.Add(currentGroup);
 
-        /*
-        Debug.Log("after generating the groups...");
-        foreach (string group in groups)
-        {
-            Debug.Log(group);
-        }
-        */
-        
 
         for (int i = groups.Count - 2; i >= 0; i--)
         {
@@ -165,18 +215,7 @@ public class EnemyGrammar : MonoBehaviour
                 groups[i] = mergedGroup;
                 groups.RemoveAt(i + 1);
             }
-
-
-
         }
-
-
-        //printing just 
-        foreach (string group in groups)
-        {
-            Debug.Log(group);
-        }
-       
     }
 
 
@@ -288,15 +327,15 @@ public class EnemyGrammar : MonoBehaviour
                     squareSizes.Add(new Vector2(0.2f, 0.2f));
                     break;
                 case 1: // right
-                    relativePositions.Add(new Vector2(0.8f , offset));
+                    relativePositions.Add(new Vector2(0.8f, offset));
                     squareSizes.Add(new Vector2(0.6f, 0.2f));
                     break;
                 case 2: // left
-                    relativePositions.Add(new Vector2(-0.8f , offset));
+                    relativePositions.Add(new Vector2(-0.8f, offset));
                     squareSizes.Add(new Vector2(0.6f, 0.2f));
                     break;
                 case 3: // down legs
-                    relativePositions.Add(new Vector2(offset, -0.7f ));
+                    relativePositions.Add(new Vector2(offset, -0.7f));
                     squareSizes.Add(new Vector2(0.2f, 0.4f));
                     break;
                 case 4: // down body
@@ -313,15 +352,9 @@ public class EnemyGrammar : MonoBehaviour
     public void GenerateObjects(string input)
     {
 
-        
-        
-
-        //relativePositions  
-        //squareSizes
-
         // Crea un GameObject vacío como padre
         GameObject parentObject = new GameObject("Parent");
-        
+
 
         //BoxCollider2D boxCollider = parentObject.AddComponent<BoxCollider2D>();
 
@@ -329,7 +362,7 @@ public class EnemyGrammar : MonoBehaviour
         parentObject.transform.position = transform.localPosition;
         // Genera el cuadro principal
         Vector2 localPosition = transform.localPosition;
-        GameObject mainSquare = GenerateSquare(localPosition, Vector2.one, parentObject.transform ,-1);
+        GameObject mainSquare = GenerateSquare(localPosition, Vector2.one, parentObject.transform, -1);
         //parentObject = mainSquare;
 
 
@@ -360,7 +393,7 @@ public class EnemyGrammar : MonoBehaviour
             {
                 newObject = GenerateWeakSquare(desplazamientoRelativo, size, previousObject.transform);
             }
-            else 
+            else
             {
                 newObject = GenerateSquare(desplazamientoRelativo, size, previousObject.transform, i);
             }
@@ -370,10 +403,10 @@ public class EnemyGrammar : MonoBehaviour
 
             if (input[i] == 'b')
             {
-               
+
                 JoinObjects(previousObject, newObject);
                 previousObject = newObject;
-                
+
             }
             else
             {
@@ -390,8 +423,10 @@ public class EnemyGrammar : MonoBehaviour
     GameObject GenerateSquare(Vector2 position, Vector2 scale, Transform parent, int i)
     {
         // Crea un nuevo GameObject
-        GameObject square = new GameObject("Square"+i.ToString());
+        GameObject square = new GameObject("Square" + i.ToString());
 
+        //add tag as enemy
+        square.tag = "Enemy"; 
         // Añade un componente SpriteRenderer al GameObject
         SpriteRenderer spriteRenderer = square.AddComponent<SpriteRenderer>();
 
@@ -410,13 +445,15 @@ public class EnemyGrammar : MonoBehaviour
         // Añade física 2D al cuadro
         Rigidbody2D rigidbody = square.AddComponent<Rigidbody2D>();
 
+        FixedJoint2D fixedJoint = square.AddComponent<FixedJoint2D>();
+
         // Configura el objeto padre para que los cuadros sean hijos suyos
         square.transform.parent = parent;
 
         if (i == -1)
         {
-            // EnemyMovement myScriptComponent = square.AddComponent<EnemyMovement>();
-            Debug.Log("removimos movimiento");
+            EnemyMovement myScriptComponent = square.AddComponent<EnemyMovement>();
+            //Debug.Log("removimos movimiento");
         }
 
         return square;
@@ -427,6 +464,10 @@ public class EnemyGrammar : MonoBehaviour
         // Crea un nuevo GameObject
         GameObject square = new GameObject("Square");
 
+
+        //add tag Goal 
+        square.tag = "Goal";
+
         // Añade un componente SpriteRenderer al GameObject
         SpriteRenderer spriteRenderer = square.AddComponent<SpriteRenderer>();
 
@@ -436,6 +477,8 @@ public class EnemyGrammar : MonoBehaviour
         // Añade un componente BoxCollider2D al GameObject
         BoxCollider2D boxCollider = square.AddComponent<BoxCollider2D>();
 
+
+        FixedJoint2D fixedJoint = square.AddComponent<FixedJoint2D>();
         // Ajusta la posición del cuadro
         square.transform.position = position;
 
@@ -450,27 +493,47 @@ public class EnemyGrammar : MonoBehaviour
 
         return square;
     }
-
-
-    void JoinObjects(GameObject objectA, GameObject objectB)
+    void JoinObjects(GameObject object1, GameObject object2)
     {
-        // Obtener los Rigidbody2D de los objetos
-        Rigidbody2D rigidbodyA = objectA.GetComponent<Rigidbody2D>();
-        Rigidbody2D rigidbodyB = objectB.GetComponent<Rigidbody2D>();
+        // Add FixedJoint2D component to object1
+        FixedJoint2D fixedJoint = object1.AddComponent<FixedJoint2D>();
 
-        // Crear una conexión entre los cuerpos rígidos
-        FixedJoint2D joint = objectA.AddComponent<FixedJoint2D>();
-        joint.connectedBody = rigidbodyB;
-        //joint.autoConfigureConnectedAnchor
-
-        //set the break force and break torque of the joint
-
-        joint.breakForce = 100000f;
-        joint.breakTorque = 100000f;
-
+        // Set the connected object for the joint
+        fixedJoint.connectedBody = object2.GetComponent<Rigidbody2D>();
     }
 
 
 
 
 }
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(EnemyGrammar))]
+class EnemyGrammarEditor : Editor{
+
+    public override void OnInspectorGUI()
+    {
+        var enemyGrammar = (EnemyGrammar)target;
+        if (enemyGrammar == null) return;
+
+        Undo.RecordObject(enemyGrammar, "savingGrammar");
+
+        if (GUILayout.Button("SaveGrammar"))
+        {
+            if (Application.isPlaying)
+            {
+                enemyGrammar.saveGrammar();
+            }
+            else 
+            {
+                Debug.Log("Game is not running");
+            }
+            
+        }
+
+        DrawDefaultInspector();
+    }
+
+
+}
+#endif

@@ -127,13 +127,27 @@ public class MoveToGoalAgent : Agent
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        /*
         if (collision.TryGetComponent<Goal>(out Goal goal)) 
         {
             SetReward(+1f);
             EndEpisode();
         }
+        */
+        if (collision.CompareTag("Goal")) 
+        {
+            SetReward(+1f);
+            EndEpisode();
+            //Debug.Log("collision with Goal");
+        }
 
-        if (collision.TryGetComponent<Wall>(out Wall wall)) 
+        if (collision.CompareTag("Wall")) 
+        {
+            SetReward(-1f);
+            EndEpisode();
+        }
+
+        if (collision.CompareTag("Enemy"))
         {
             SetReward(-1f);
             EndEpisode();

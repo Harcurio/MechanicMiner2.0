@@ -125,13 +125,6 @@ public class EnemyTest : MonoBehaviour
 
         groups.Add(currentGroup);
 
-        /*
-        Debug.Log("after generating the groups...");
-        foreach (string group in groups)
-        {
-            Debug.Log(group);
-        }
-        */
 
 
         for (int i = groups.Count - 2; i >= 0; i--)
@@ -166,18 +159,7 @@ public class EnemyTest : MonoBehaviour
                 groups[i] = mergedGroup;
                 groups.RemoveAt(i + 1);
             }
-
-
-
         }
-
-
-        //printing just 
-        //foreach (string group in groups)
-        //{
-        //    Debug.Log(group);
-        //}
-
     }
 
 
@@ -202,8 +184,6 @@ public class EnemyTest : MonoBehaviour
     /// </summary>
     private void generateBody()
     {
-
-
         foreach (string group in groups)
         {
 
@@ -313,12 +293,6 @@ public class EnemyTest : MonoBehaviour
 
     public void GenerateObjects(string input)
     {
-
-
-
-
-        //relativePositions  
-        //squareSizes
 
         // Crea un GameObject vacío como padre
         GameObject parentObject = new GameObject("Parent");
@@ -456,24 +430,6 @@ public class EnemyTest : MonoBehaviour
         return square;
     }
 
-    /*
-    void JoinObjects(GameObject objectA, GameObject objectB)
-    {
-        // Obtener los Rigidbody2D de los objetos
-        Rigidbody2D rigidbodyA = objectA.GetComponent<Rigidbody2D>();
-        Rigidbody2D rigidbodyB = objectB.GetComponent<Rigidbody2D>();
-
-        // Crear una conexión entre los cuerpos rígidos
-        FixedJoint2D joint = objectA.AddComponent<FixedJoint2D>();
-        joint.connectedBody = rigidbodyB;
-        //joint.autoConfigureConnectedAnchor
-
-        //set the break force and break torque of the joint
-
-        joint.breakForce = 100000f;
-        joint.breakTorque = 100000f;
-
-    }*/
 
     void JoinObjects(GameObject object1, GameObject object2)
     {
