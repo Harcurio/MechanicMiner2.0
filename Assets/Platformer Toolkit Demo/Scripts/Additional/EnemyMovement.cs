@@ -13,10 +13,16 @@ public class EnemyMovement : MonoBehaviour
     private float timeToChange = 4f;
 
 
+    bool change = false;
 
     void Start()
     {
         timeCounter = timeToChange; 
+    }
+
+    void differentTime() 
+    { 
+        timeToChange = Random.Range(1f, 8f);
     }
 
     // Update is called once per frame
@@ -34,8 +40,15 @@ public class EnemyMovement : MonoBehaviour
 
         if(timeCounter <= 0)
         {
+            
             timeCounter = timeToChange;
             goRight = !goRight;
+            change = !change;
+            /*
+            if (!change)
+            {
+                differentTime();
+            }*/
         }
     }
 }

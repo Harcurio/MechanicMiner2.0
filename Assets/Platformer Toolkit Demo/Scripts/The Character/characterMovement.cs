@@ -60,6 +60,9 @@ namespace GMTK.PlatformerToolkit
 
         private void Update()
         {
+
+            
+            
             //Used to stop movement when the character is playing her death animation
             if (!movementLimiter.instance.CharacterCanMove)
             {

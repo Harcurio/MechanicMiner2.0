@@ -123,6 +123,7 @@ namespace GMTK.PlatformerToolkit {
 
         private void setPhysics()
         {
+       
             //Determine the character's gravity scale, using the stats provided. Multiply it by a gravMultiplier, used later
             Vector2 newGravity = new Vector2(0, (-2 * jumpHeight) / (timeToJumpApex * timeToJumpApex));
             body.gravityScale = (newGravity.y / Physics2D.gravity.y) * gravMultiplier;
@@ -189,7 +190,8 @@ namespace GMTK.PlatformerToolkit {
                 if (onGround)
                 //Don't change it if Kit is stood on something (such as a moving platform)
                 {
-                    gravMultiplier = defaultGravityScale;
+                    //gravMultiplier = defaultGravityScale;             //testing why the super jumps....
+                    gravMultiplier = downwardMovementMultiplier;
                 }
                 else
                 {

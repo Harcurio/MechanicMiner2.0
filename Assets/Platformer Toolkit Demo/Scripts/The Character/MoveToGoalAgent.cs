@@ -30,13 +30,13 @@ public class MoveToGoalAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-        _moveScript.transform.position = new Vector2(-3f, 0f);
+        _moveScript.transform.position = new Vector2(-8f, -4f);
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
         
-        toGoal = _goalScript.transform.position - _moveScript.transform.position;
+        //toGoal = _goalScript.transform.position - _moveScript.transform.position; // not goal set rightnow...
         sensor.AddObservation(toGoal.normalized);
 
     }
@@ -136,6 +136,7 @@ public class MoveToGoalAgent : Agent
         */
         if (collision.CompareTag("Goal")) 
         {
+            Debug.Log("goal reached.");
             SetReward(+1f);
             EndEpisode();
             //Debug.Log("collision with Goal");

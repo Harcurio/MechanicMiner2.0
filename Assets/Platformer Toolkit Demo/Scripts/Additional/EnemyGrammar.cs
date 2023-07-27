@@ -13,8 +13,8 @@ public class EnemyGrammar : MonoBehaviour
 {
     public Sprite squareSprite;  // sprite of all the parts ( we can create an array with different colors just to represent better this
     public Sprite squarewSprite;
-    public List<Vector2> relativePositions = new List<Vector2>(); //positions of each part of the enemy
-    public List<Vector2> squareSizes = new List<Vector2>();   //size of each part of the enemy
+    private List<Vector2> relativePositions = new List<Vector2>(); //positions of each part of the enemy
+    private List<Vector2> squareSizes = new List<Vector2>();   //size of each part of the enemy
 
     //just a fun size for the moment...
     //public Vector2 squareSize = {0.8f, 0.2f};
@@ -426,7 +426,10 @@ public class EnemyGrammar : MonoBehaviour
         GameObject square = new GameObject("Square" + i.ToString());
 
         //add tag as enemy
-        square.tag = "Enemy"; 
+        square.tag = "Enemy";
+        square.layer = LayerMask.NameToLayer("Hurt");
+
+
         // Añade un componente SpriteRenderer al GameObject
         SpriteRenderer spriteRenderer = square.AddComponent<SpriteRenderer>();
 
@@ -435,6 +438,7 @@ public class EnemyGrammar : MonoBehaviour
 
         // Añade un componente BoxCollider2D al GameObject
         BoxCollider2D boxCollider = square.AddComponent<BoxCollider2D>();
+        boxCollider.isTrigger = true;
 
         // Ajusta la posición del cuadro
         square.transform.position = position;
@@ -467,6 +471,7 @@ public class EnemyGrammar : MonoBehaviour
 
         //add tag Goal 
         square.tag = "Goal";
+        square.layer = LayerMask.NameToLayer("Kill");
 
         // Añade un componente SpriteRenderer al GameObject
         SpriteRenderer spriteRenderer = square.AddComponent<SpriteRenderer>();
@@ -476,6 +481,7 @@ public class EnemyGrammar : MonoBehaviour
 
         // Añade un componente BoxCollider2D al GameObject
         BoxCollider2D boxCollider = square.AddComponent<BoxCollider2D>();
+        boxCollider.isTrigger = true;
 
 
         FixedJoint2D fixedJoint = square.AddComponent<FixedJoint2D>();
