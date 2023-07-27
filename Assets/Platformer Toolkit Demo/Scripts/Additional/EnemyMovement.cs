@@ -10,7 +10,7 @@ public class EnemyMovement : MonoBehaviour
 
     private float timeCounter;
 
-    private float timeToChange = 4f;
+    private float timeToChange = 4f;// 4 default
 
 
     bool change = false;

@@ -19,8 +19,8 @@ namespace GMTK.PlatformerToolkit {
         [SerializeField] private ParticleSystem landParticles;
 
         [Header("Components - Audio")]
-        [SerializeField] AudioSource jumpSFX;
-        [SerializeField] AudioSource landSFX;
+        //[SerializeField] AudioSource jumpSFX;
+        //[SerializeField] AudioSource landSFX;
 
         [Header("Settings - Squash and Stretch")]
         [SerializeField, Tooltip("Width Squeeze, Height Squeeze, Duration")] Vector3 jumpSquashSettings;
@@ -90,10 +90,11 @@ namespace GMTK.PlatformerToolkit {
                 //Play an animation, some particles, and a sound effect when the player lands
                 myAnimator.SetTrigger("Landed");
                 landParticles.Play();
-
-                if (!landSFX.isPlaying && landSFX.enabled) {
-                    landSFX.Play();
-                }
+                
+                //no noice
+                //if (!landSFX.isPlaying && landSFX.enabled) {
+                    //landSFX.Play();
+                //}
 
                 moveParticles.Play();
 
@@ -126,10 +127,11 @@ namespace GMTK.PlatformerToolkit {
             myAnimator.ResetTrigger("Landed");
             myAnimator.SetTrigger("Jump");
 
-            if (jumpSFX.enabled) {
-                jumpSFX.Play();
+            //no noice
+            //if (jumpSFX.enabled) {
+                //jumpSFX.Play();
 
-            }
+            //}
 
             if (!jumpSqueezing && jumpSqueezeMultiplier > 1) {
                 StartCoroutine(JumpSqueeze(jumpSquashSettings.x / jumpSqueezeMultiplier, jumpSquashSettings.y * jumpSqueezeMultiplier, jumpSquashSettings.z, 0, true));
