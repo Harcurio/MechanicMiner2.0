@@ -41,6 +41,7 @@ namespace GMTK.PlatformerToolkit {
         private bool pressingJump;
         public bool onGround;
         private bool currentlyJumping;
+        private int countJumps = 1; // add this to track times of jumps
 
         void Awake()
         {
@@ -89,6 +90,11 @@ namespace GMTK.PlatformerToolkit {
 
             //Check if we're on ground, using Kit's Ground script
             onGround = ground.GetOnGround();
+
+            if (onGround) 
+            {
+                countJumps = 1;
+            }
 
             //Jump buffer allows us to queue up a jump, which will play when we next hit the ground
             if (jumpBuffer > 0)
@@ -222,36 +228,44 @@ namespace GMTK.PlatformerToolkit {
             //Create the jump, provided we are on the ground, in coyote time, or have a double jump available
             if (onGround || (coyoteTimeCounter > 0.03f && coyoteTimeCounter < coyoteTime) || canJumpAgain)
             {
-                desiredJump = false;
-                jumpBufferCounter = 0;
-                coyoteTimeCounter = 0;
-
-                //If we have double jump on, allow us to jump again (but only once)
-                canJumpAgain = (maxAirJumps == 1 && canJumpAgain == false);
-
-                //Determine the power of the jump, based on our gravity and stats
-                jumpSpeed = Mathf.Sqrt(-2f * Physics2D.gravity.y * body.gravityScale * jumpHeight);
-
-                //If Kit is moving up or down when she jumps (such as when doing a double jump), change the jumpSpeed;
-                //This will ensure the jump is the exact same strength, no matter your velocity.
-                if (velocity.y > 0f)
+                if (countJumps > 0 && canJumpAgain ) 
                 {
-                    jumpSpeed = Mathf.Max(jumpSpeed - velocity.y, 0f);
-                }
-                else if (velocity.y < 0f)
-                {
-                    jumpSpeed += Mathf.Abs(body.velocity.y);
-                }
+                    countJumps -= countJumps;
+                    desiredJump = false;
 
-                //Apply the new jumpSpeed to the velocity. It will be sent to the Rigidbody in FixedUpdate;
-                velocity.y += jumpSpeed;
-                currentlyJumping = true;
 
-                if (juice != null)
-                {
-                    //Apply the jumping effects on the juice script
-                    juice.jumpEffects();
+                    jumpBufferCounter = 0;
+                    coyoteTimeCounter = 0;
+
+                    //If we have double jump on, allow us to jump again (but only once)
+                    canJumpAgain = (maxAirJumps == 1 && canJumpAgain == false);
+
+                    //Determine the power of the jump, based on our gravity and stats
+                    jumpSpeed = Mathf.Sqrt(-2f * Physics2D.gravity.y * body.gravityScale * jumpHeight);
+
+                    //If Kit is moving up or down when she jumps (such as when doing a double jump), change the jumpSpeed;
+                    //This will ensure the jump is the exact same strength, no matter your velocity.
+                    if (velocity.y > 0f)
+                    {
+                        jumpSpeed = Mathf.Max(jumpSpeed - velocity.y, 0f);
+                    }
+                    else if (velocity.y < 0f)
+                    {
+                        jumpSpeed += Mathf.Abs(body.velocity.y);
+                    }
+
+                    //Apply the new jumpSpeed to the velocity. It will be sent to the Rigidbody in FixedUpdate;
+                    velocity.y += jumpSpeed;
+                    currentlyJumping = true;
+
+                    if (juice != null)
+                    {
+                        //Apply the jumping effects on the juice script
+                        juice.jumpEffects();
+                    }
+
                 }
+                
             }
 
             if (jumpBuffer == 0)

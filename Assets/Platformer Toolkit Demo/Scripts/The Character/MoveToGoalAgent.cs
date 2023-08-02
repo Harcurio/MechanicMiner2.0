@@ -12,22 +12,27 @@ public class MoveToGoalAgent : Agent
     characterMovement _moveScript;
     characterJump _jumpScript;
 
-    public GameObject _goalScript;
+    //GameOject _goalScript;
+    GameObject _goal;
 
-
-    private Vector2 toGoal;
+    public  Vector2 toGoal;
 
     void Awake()
     {
         _moveScript = GetComponent<characterMovement>();
         _jumpScript = GetComponent<characterJump>();
-        //_goalScript = GetComponent<Goal>();
+        //_goal = GetComponent<Goal>();
 
         toGoal =  Vector2.zero;
-
+        
         //InstallPresetData();
     }
-
+    /*
+    private void Start()
+    {
+         _goal = GameObject.FindWithTag("Goal");
+    }
+    */
     public override void OnEpisodeBegin()
     {
         _moveScript.transform.position = new Vector2(-8f, -4f);
@@ -35,9 +40,10 @@ public class MoveToGoalAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        
-        //toGoal = _goalScript.transform.position - _moveScript.transform.position; // not goal set rightnow...
-        sensor.AddObservation(toGoal.normalized);
+
+        //toGoal = _goal.transform.position - _moveScript.transform.position; // not goal set rightnow...
+        //sensor.AddObservation(toGoal.normalized);
+        //sensor.AddObservation(_moveScript.velocity);
 
     }
 
@@ -51,11 +57,16 @@ public class MoveToGoalAgent : Agent
 
 
         if(actions.DiscreteActions[0] == 1)
-        { 
+        {
             //press button of new rule
-        }else
-        { 
+            _jumpScript.canJumpAgain = true;
+            //_jumpScript.jumping(true);
+            //_jumpScript.pressing(true);
+        }
+        else
+        {
             //none? or depress the button?
+            _jumpScript.pressing(false);
         }
 
         if (actions.DiscreteActions[1] == 0) //left
@@ -90,8 +101,11 @@ public class MoveToGoalAgent : Agent
         }
 
 
-        AddReward(-1f / MaxStep);
+        //AddReward(-1f / MaxStep);
+        AddReward(-1f / 6);
     }
+
+
 
    
     
@@ -137,7 +151,7 @@ public class MoveToGoalAgent : Agent
         if (collision.CompareTag("Goal")) 
         {
             Debug.Log("goal reached.");
-            SetReward(+1f);
+            AddReward(+5f);
             EndEpisode();
             //Debug.Log("collision with Goal");
         }
@@ -150,7 +164,8 @@ public class MoveToGoalAgent : Agent
 
         if (collision.CompareTag("Enemy"))
         {
-            SetReward(-1f);
+            Debug.Log("muerte");
+            AddReward(-3f);
             EndEpisode();
         }
     }

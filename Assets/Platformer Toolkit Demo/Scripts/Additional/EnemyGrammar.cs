@@ -448,7 +448,7 @@ public class EnemyGrammar : MonoBehaviour
 
         // Añade física 2D al cuadro
         Rigidbody2D rigidbody = square.AddComponent<Rigidbody2D>();
-
+        rigidbody.isKinematic = true;
         FixedJoint2D fixedJoint = square.AddComponent<FixedJoint2D>();
 
         // Configura el objeto padre para que los cuadros sean hijos suyos
@@ -456,8 +456,8 @@ public class EnemyGrammar : MonoBehaviour
 
         if (i == -1)
         {
-            EnemyMovement myScriptComponent = square.AddComponent<EnemyMovement>();
-            //Debug.Log("removimos movimiento");
+            //EnemyMovement myScriptComponent = square.AddComponent<EnemyMovement>();
+            Debug.Log("removimos movimiento");
         }
 
         return square;
@@ -465,7 +465,7 @@ public class EnemyGrammar : MonoBehaviour
 
     GameObject GenerateWeakSquare(Vector2 position, Vector2 scale, Transform parent)
     {
-        // Crea un nuevo GameObject
+        /*// Crea un nuevo GameObject
         GameObject square = new GameObject("Square");
 
 
@@ -493,10 +493,43 @@ public class EnemyGrammar : MonoBehaviour
 
         // Añade física 2D al cuadro
         Rigidbody2D rigidbody = square.AddComponent<Rigidbody2D>();
-
+        rigidbody.isKinematic = true;
         // Configura el objeto padre para que los cuadros sean hijos suyos
         square.transform.parent = parent;
+        */
 
+        // Crea un nuevo GameObject
+        GameObject square = new GameObject("Square" );
+
+        //add tag as enemy
+        square.tag = "Goal";
+        square.layer = LayerMask.NameToLayer("Kill");
+
+
+        // Añade un componente SpriteRenderer al GameObject
+        SpriteRenderer spriteRenderer = square.AddComponent<SpriteRenderer>();
+
+        // Asigna el sprite al componente SpriteRenderer
+        spriteRenderer.sprite = squarewSprite;
+
+        // Añade un componente BoxCollider2D al GameObject
+        BoxCollider2D boxCollider = square.AddComponent<BoxCollider2D>();
+        boxCollider.isTrigger = true;
+
+        // Ajusta la posición del cuadro
+        square.transform.position = position;
+
+        // Ajusta la escala del cuadro
+        square.transform.localScale = scale;
+
+        // Añade física 2D al cuadro
+        Rigidbody2D rigidbody = square.AddComponent<Rigidbody2D>();
+        rigidbody.isKinematic = true;
+        FixedJoint2D fixedJoint = square.AddComponent<FixedJoint2D>();
+
+        Goal myScriptComponent = square.AddComponent<Goal>();
+        // Configura el objeto padre para que los cuadros sean hijos suyos
+        square.transform.parent = parent;
         return square;
     }
     void JoinObjects(GameObject object1, GameObject object2)

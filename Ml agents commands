@@ -1,0 +1,16 @@
+Ml agents commands~~
+
+mlagents-learn --time-scale=1  --run-id=<IDname>  --force/--resume
+
+mlagents-learn --env=bmm\mm --num-envs=5 --run-id=test
+
+
+<with the .yaml configuration file>
+
+mlagents-learn config/ppo/3DBall.yaml --run-id=first3DBallRun
+
+
+
+##tensor board 
+
+tensorboard --logdir results
