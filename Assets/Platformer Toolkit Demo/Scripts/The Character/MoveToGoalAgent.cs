@@ -16,6 +16,7 @@ public class MoveToGoalAgent : Agent
     GameObject _goal;
 
     public  Vector2 toGoal;
+    double contadorvalue = 0f;
 
     void Awake()
     {
@@ -36,6 +37,7 @@ public class MoveToGoalAgent : Agent
     public override void OnEpisodeBegin()
     {
         _moveScript.transform.position = new Vector2(-8f, -4f);
+        //Debug.Log("ContadorNegativo" + contadorvalue);
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -102,7 +104,9 @@ public class MoveToGoalAgent : Agent
 
 
         //AddReward(-1f / MaxStep);
-        AddReward(-1f / 6);
+
+        contadorvalue = contadorvalue + (-2f / MaxStep);
+        AddReward(-4f / MaxStep);
     }
 
 
@@ -151,7 +155,7 @@ public class MoveToGoalAgent : Agent
         if (collision.CompareTag("Goal")) 
         {
             Debug.Log("goal reached.");
-            AddReward(+5f);
+            SetReward(+5f);
             EndEpisode();
             //Debug.Log("collision with Goal");
         }
@@ -165,7 +169,7 @@ public class MoveToGoalAgent : Agent
         if (collision.CompareTag("Enemy"))
         {
             Debug.Log("muerte");
-            AddReward(-3f);
+            SetReward(-1f);
             EndEpisode();
         }
     }
