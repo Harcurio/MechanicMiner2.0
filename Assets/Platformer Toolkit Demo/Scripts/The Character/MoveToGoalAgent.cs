@@ -45,7 +45,7 @@ public class MoveToGoalAgent : Agent
 
         //toGoal = _goal.transform.position - _moveScript.transform.position; // not goal set rightnow...
         //sensor.AddObservation(toGoal.normalized);
-        //sensor.AddObservation(_moveScript.velocity);
+        sensor.AddObservation(_moveScript.velocity);
 
     }
 
@@ -58,18 +58,28 @@ public class MoveToGoalAgent : Agent
         int jump = actions.DiscreteActions[2]; // jump 
 
 
-        if(actions.DiscreteActions[0] == 1)
+        if(actions.DiscreteActions[0] == 1) // new rule
         {
             //press button of new rule
+            Debug.Log("double jump");
             _jumpScript.canJumpAgain = true;
             //_jumpScript.jumping(true);
             //_jumpScript.pressing(true);
         }
-        else
+
+        if (actions.DiscreteActions[2] == 1) // Jump
         {
-            //none? or depress the button?
-            _jumpScript.pressing(false);
+
+            _jumpScript.jumping(true);
+            _jumpScript.pressing(true);
         }
+
+
+        //else
+        //{
+        //none? or depress the button?
+        //  _jumpScript.pressing(false);
+        //}
 
         if (actions.DiscreteActions[1] == 0) //left
         {
@@ -91,22 +101,18 @@ public class MoveToGoalAgent : Agent
             _moveScript.pressingKey = false;
         }
 
-        if(actions.DiscreteActions[2] == 1) // Jump
+        
+        /*else
         {
-            
-            _jumpScript.jumping(true);
-            _jumpScript.pressing(true);
-        }
-        else
-        {
-            _jumpScript.pressing(false);
-        }
+            //_jumpScript.pressing(false);
+            Debug.Log("se esta precionando esto");
+        }*/
 
 
         //AddReward(-1f / MaxStep);
 
-        contadorvalue = contadorvalue + (-2f / MaxStep);
-        AddReward(-4f / MaxStep);
+        //contadorvalue = contadorvalue + (-2f / MaxStep);
+        AddReward(-3.5f / MaxStep);
     }
 
 
@@ -130,18 +136,18 @@ public class MoveToGoalAgent : Agent
             discreteActions[1] = 2;
         }
         
-        /*
+        
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            discreteActions[2] = 1;
-            Debug.Log("jump?");
+           // discreteActions[2] = 1;
+            //Debug.Log("jump?");
         }else if (Input.GetKeyUp(KeyCode.Space))
         {
-            discreteActions[2] = 0;
-        }*/
+            //discreteActions[2] = 0;
+        }
 
     }
-
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

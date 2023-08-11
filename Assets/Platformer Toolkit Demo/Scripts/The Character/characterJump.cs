@@ -66,13 +66,14 @@ namespace GMTK.PlatformerToolkit {
         public void OnJump(InputAction.CallbackContext context)
         {
             //This function is called when one of the jump buttons (like space or the A button) is pressed.
-
+            Debug.Log("estamos saltando");
             if (movementLimiter.instance.CharacterCanMove)
             {
                 //When we press the jump button, tell the script that we desire a jump.
                 //Also, use the started and canceled contexts to know if we're currently holding the button
                 if (context.started)
                 {
+                   
                     desiredJump = true;
                     pressingJump = true;
                 }
@@ -95,14 +96,16 @@ namespace GMTK.PlatformerToolkit {
             {
                 countJumps = 1;
             }
-
+          
             //Jump buffer allows us to queue up a jump, which will play when we next hit the ground
             if (jumpBuffer > 0)
             {
+       
                 //Instead of immediately turning off "desireJump", start counting up...
                 //All the while, the DoAJump function will repeatedly be fired off
                 if (desiredJump)
                 {
+                  
                     jumpBufferCounter += Time.deltaTime;
 
                     if (jumpBufferCounter > jumpBuffer)
@@ -141,8 +144,10 @@ namespace GMTK.PlatformerToolkit {
             velocity = body.velocity;
 
             //Keep trying to do a jump, for as long as desiredJump is true
+           
             if (desiredJump)
             {
+                
                 DoAJump();
                 body.velocity = velocity;
 
@@ -224,12 +229,15 @@ namespace GMTK.PlatformerToolkit {
 
         private void DoAJump()
         {
-
+            
             //Create the jump, provided we are on the ground, in coyote time, or have a double jump available
             if (onGround || (coyoteTimeCounter > 0.03f && coyoteTimeCounter < coyoteTime) || canJumpAgain)
             {
-                if (countJumps > 0 && canJumpAgain ) 
+                
+                if (countJumps > 0 || canJumpAgain ) 
                 {
+
+                    
                     countJumps -= countJumps;
                     desiredJump = false;
 

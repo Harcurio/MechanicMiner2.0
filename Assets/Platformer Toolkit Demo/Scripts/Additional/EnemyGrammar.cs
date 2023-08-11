@@ -324,7 +324,7 @@ public class EnemyGrammar : MonoBehaviour
             {
                 case 0: //up
                     relativePositions.Add(new Vector2(offset, 0.6f));
-                    squareSizes.Add(new Vector2(0.2f, 0.2f));
+                    squareSizes.Add(new Vector2(0.4f, 0.4f));
                     break;
                 case 1: // right
                     relativePositions.Add(new Vector2(0.8f, offset));
