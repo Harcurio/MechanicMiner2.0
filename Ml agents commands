@@ -2,10 +2,14 @@ Ml agents commands~~
 
 mlagents-learn --time-scale=1  --run-id=<IDname>  --force/--resume
 
-mlagents-learn --env=bmm\mm --num-envs=5 --run-id=test
+mlagents-learn --env=C:\Users\Johor\bmm\mm --num-envs=5 --run-id=test
 
 
-<with the .yaml configuration file>
+mlagents-learn C:\Users\Johor\results\configuration.yaml --env=C:\Users\Johor\bmm\mm2 --num-envs=5 --run-id=test6 --force
+
+mlagents-learn C:\Users\Johor\results\configuration.yaml --env=C:\Users\Johor\bmm\mm2 --time-scale=1 --num-envs=5 --run-id=test22 --resume
+
+mlagents-learn --time-scale=1 --force
 
 mlagents-learn config/ppo/3DBall.yaml --run-id=first3DBallRun
 
@@ -14,3 +18,11 @@ mlagents-learn config/ppo/3DBall.yaml --run-id=first3DBallRun
 ##tensor board 
 
 tensorboard --logdir results
+
+
+## 
+to save logs 
+
+<command>  > log.txt  or >> to overwrite
+
+

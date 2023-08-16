@@ -61,8 +61,8 @@ public class MoveToGoalAgent : Agent
         if(actions.DiscreteActions[0] == 1) // new rule
         {
             //press button of new rule
-            Debug.Log("double jump");
-            _jumpScript.canJumpAgain = true;
+            //Debug.Log("double jump");
+            _jumpScript.doubleJump();//canJumpAgain = true;
             //_jumpScript.jumping(true);
             //_jumpScript.pressing(true);
         }

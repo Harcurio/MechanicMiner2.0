@@ -63,6 +63,21 @@ namespace GMTK.PlatformerToolkit {
             desiredJump = change;
         }
 
+        public void doubleJump() 
+        {
+            //desiredJump = true;
+            //pressingJump = true;
+
+            //canJumpAgain = true;
+            
+            if (!onGround && !canJumpAgain)
+            {
+                //desiredJump = true;
+                canJumpAgain = true;
+                //countJumps--;
+            }
+        }
+
         public void OnJump(InputAction.CallbackContext context)
         {
             //This function is called when one of the jump buttons (like space or the A button) is pressed.
@@ -82,7 +97,11 @@ namespace GMTK.PlatformerToolkit {
                 {
                     pressingJump = false;
                 }
+
+                doubleJump();
             }
+            
+            
         }
 
         void Update()
@@ -94,7 +113,7 @@ namespace GMTK.PlatformerToolkit {
 
             if (onGround) 
             {
-                countJumps = 1;
+                countJumps = 3;
             }
           
             //Jump buffer allows us to queue up a jump, which will play when we next hit the ground
@@ -234,7 +253,7 @@ namespace GMTK.PlatformerToolkit {
             if (onGround || (coyoteTimeCounter > 0.03f && coyoteTimeCounter < coyoteTime) || canJumpAgain)
             {
                 
-                if (countJumps > 0 || canJumpAgain ) 
+                if (countJumps > 0 )//|| canJumpAgain ) 
                 {
 
                     
