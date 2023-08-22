@@ -11,6 +11,7 @@ public class MoveToGoalAgent : Agent
 
     characterMovement _moveScript;
     characterJump _jumpScript;
+    public EnemyGrammar _enemyStript;
 
     //GameOject _goalScript;
     GameObject _goal;
@@ -22,6 +23,7 @@ public class MoveToGoalAgent : Agent
     {
         _moveScript = GetComponent<characterMovement>();
         _jumpScript = GetComponent<characterJump>();
+        //_enemyStript = GetComponent<EnemyGrammar>();
         //_goal = GetComponent<Goal>();
 
         toGoal =  Vector2.zero;
@@ -36,7 +38,9 @@ public class MoveToGoalAgent : Agent
     */
     public override void OnEpisodeBegin()
     {
-        _moveScript.transform.position = new Vector2(-8f, -4f);
+        float ranX = Random.Range(-15f,27f);
+        _moveScript.transform.position = new Vector2(ranX, -4f);
+        _enemyStript.movePosition();
         //Debug.Log("ContadorNegativo" + contadorvalue);
     }
 

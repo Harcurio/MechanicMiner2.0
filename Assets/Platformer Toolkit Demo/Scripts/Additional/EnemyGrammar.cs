@@ -25,7 +25,15 @@ public class EnemyGrammar : MonoBehaviour
     private int weakspot { get; set; }
 
     private string result { get; set; }
-    string projectPath; 
+    string projectPath;
+
+    //parent object 
+
+    GameObject parentObject;
+
+    [SerializeField] public float valueX1;//range 1 of the spawn for x
+    [SerializeField] public float valueX2;//range 2 of the spawn for x
+    [SerializeField] public float valueY; // height
 
     void Start()
     {
@@ -41,16 +49,16 @@ public class EnemyGrammar : MonoBehaviour
             result = RemoveNumbers(result);
             Weak(result);
         }
-        
+        parentObject = new GameObject("Parent");
         //Debug.Log(result);
 
         //result = "hlre";
 
-        
+
         //Debug.Log(result);
         // Debug.Log("hllrrbllrre");
         //generatePositions(result); // hhlrree
-         //generate the weakest point in the enemy
+        //generate the weakest point in the enemy
         generatePositions(result); // grupos
 
         generateBody();     //posiciones y body?
@@ -353,7 +361,7 @@ public class EnemyGrammar : MonoBehaviour
     {
 
         // Crea un GameObject vacío como padre
-        GameObject parentObject = new GameObject("Parent");
+        //GameObject parentObject = new GameObject("Parent");
 
 
         //BoxCollider2D boxCollider = parentObject.AddComponent<BoxCollider2D>();
@@ -465,38 +473,6 @@ public class EnemyGrammar : MonoBehaviour
 
     GameObject GenerateWeakSquare(Vector2 position, Vector2 scale, Transform parent)
     {
-        /*// Crea un nuevo GameObject
-        GameObject square = new GameObject("Square");
-
-
-        //add tag Goal 
-        square.tag = "Goal";
-        square.layer = LayerMask.NameToLayer("Kill");
-
-        // Añade un componente SpriteRenderer al GameObject
-        SpriteRenderer spriteRenderer = square.AddComponent<SpriteRenderer>();
-
-        // Asigna el sprite al componente SpriteRenderer
-        spriteRenderer.sprite = squarewSprite;
-
-        // Añade un componente BoxCollider2D al GameObject
-        BoxCollider2D boxCollider = square.AddComponent<BoxCollider2D>();
-        boxCollider.isTrigger = true;
-
-
-        FixedJoint2D fixedJoint = square.AddComponent<FixedJoint2D>();
-        // Ajusta la posición del cuadro
-        square.transform.position = position;
-
-        // Ajusta la escala del cuadro
-        square.transform.localScale = scale;
-
-        // Añade física 2D al cuadro
-        Rigidbody2D rigidbody = square.AddComponent<Rigidbody2D>();
-        rigidbody.isKinematic = true;
-        // Configura el objeto padre para que los cuadros sean hijos suyos
-        square.transform.parent = parent;
-        */
 
         // Crea un nuevo GameObject
         GameObject square = new GameObject("Square" );
@@ -541,6 +517,12 @@ public class EnemyGrammar : MonoBehaviour
         fixedJoint.connectedBody = object2.GetComponent<Rigidbody2D>();
     }
 
+    //need to document
+    public void movePosition() 
+    {
+        float ranX = Random.Range(valueX1, valueX2);
+        parentObject.transform.position = new Vector2(ranX,valueY);
+    }
 
 
 
@@ -556,6 +538,7 @@ class EnemyGrammarEditor : Editor{
         if (enemyGrammar == null) return;
 
         Undo.RecordObject(enemyGrammar, "savingGrammar");
+        Undo.RecordObject(enemyGrammar, "changePosition");
 
         if (GUILayout.Button("SaveGrammar"))
         {
@@ -568,6 +551,20 @@ class EnemyGrammarEditor : Editor{
                 Debug.Log("Game is not running");
             }
             
+        }
+
+        if (GUILayout.Button("changePosition"))
+        {
+            if (Application.isPlaying)
+            {
+                //enemyGrammar.saveGrammar();
+                enemyGrammar.movePosition();
+            }
+            else
+            {
+                Debug.Log("Game is not running");
+            }
+
         }
 
         DrawDefaultInspector();

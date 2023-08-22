@@ -35,6 +35,8 @@ namespace GMTK.PlatformerToolkit
         private float acceleration;
         private float deceleration;
         private float turnSpeed;
+        public int testint;
+        public double testdouble;
 
         [Header("Current State")]
         public bool onGround;
