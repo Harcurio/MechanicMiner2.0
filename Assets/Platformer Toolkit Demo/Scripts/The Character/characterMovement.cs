@@ -37,6 +37,9 @@ namespace GMTK.PlatformerToolkit
         private float turnSpeed;
         public int testint;
         public double testdouble;
+        public string teststring;
+        public Transform testtransform;
+        public Vector3 testvector3;
 
         [Header("Current State")]
         public bool onGround;

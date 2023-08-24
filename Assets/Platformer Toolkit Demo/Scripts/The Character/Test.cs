@@ -32,34 +32,32 @@ public class Test : MonoBehaviour
 
                 if (scriptType == null) 
                 {
-                    Debug.Log("holiwis");
+                    Debug.Log("ScriptType Null");
                 }
-                Debug.Log("before methods" + scriptType.Name );
                 // Retrieve methods
                 
                 MethodInfo[] methods = scriptType.GetMethods();
-                Debug.Log("error?");
                 foreach (MethodInfo method in methods)
                 {
                     reflectionData.methodNames.Add(method.Name);
                     // Debug.Log("Method Name: " + method.Name);
                 }
 
-                Debug.Log("before variables");
                 // Retrieve variables
                 FieldInfo[] fields = scriptType.GetFields();
                 foreach (FieldInfo field in fields)
                 {
                     reflectionData.variableNames.Add(field.Name);
                     reflectionData.variableTypes.Add(field.FieldType.ToString());
-                    Debug.Log("Variable Name: " + field.Name + ", Variable Type: " + field.FieldType);
+                    //Debug.Log("Variable Name: " + field.Name + ", Variable Type: " + field.FieldType);
                 }
-                /*
+                
                 PropertyInfo[] pis = scriptType.GetProperties();
                 foreach (PropertyInfo p in pis)
                 {
+                    reflectionData.PropertyName.Add(p.Name);
                     //Debug.Log("Variable Name: " + p.Name + ", Variable Type: " + p.GetType().ToString());
-                }*/
+                }
 
 
                 // Convert reflectionData to JSON
@@ -91,4 +89,6 @@ public class ReflectionData
     public List<string> methodNames = new List<string>();
     public List<string> variableNames = new List<string>();
     public List<string> variableTypes = new List<string>();
+    public List<string> PropertyName = new List<string>();
+
 }
