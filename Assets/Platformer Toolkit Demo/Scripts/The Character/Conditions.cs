@@ -9,6 +9,10 @@ public class Conditions
 
     // NEW CODE august 2023
 
+
+    ///In this moment is not possible to compare between different type of variables just int vs int float vs float etc.
+    /// in case that this will be needed is possible to add this new cases...
+   
     //Integer comparison methods
     #region Integer Comparisons
     public static bool IsInRange(Variable<int> variable, int minValue, int maxValue) 
