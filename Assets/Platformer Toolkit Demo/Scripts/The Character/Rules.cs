@@ -1,12 +1,128 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Reflection;
 
-public class Rules 
+public class Rules
 {
+    //class to check reflection variables
+    public GameObject objectToSearch;
+    public string scriptName;
+
+    //
+    private string jsonData;
+    public  ReflectionData reflectionData;
+
+    //variables that can be modified 
+    public List<Variable<object>> variablesList = new List<Variable<object>>();
+
+    private void Start()
+    {
+        if (objectToSearch != null)
+        {
+            Component script = objectToSearch.GetComponent(scriptName);
+
+            if (script != null)
+            {
+                Debug.Log($"Found the script '{scriptName}' on the assigned object");
+
+                Type scriptType = script.GetType();
+                reflectionData = GenerateReflectionData(scriptType);
+
+                jsonData = JsonUtility.ToJson(reflectionData, true);
+                string savePath = Path.Combine(Application.dataPath, "ReflectionData.json");
+                File.WriteAllText(savePath, jsonData);
+
+                Debug.Log($"Reflection data saved at {savePath}");
+
+                //CODE CONTINUES HERE
+                //NEED A FUNCTION THAT WILL GET THE NEXT FUNCTIONS
+            }
+            else
+            {
+                Debug.Log($"The script '{scriptName}' is not attached to the assigned object.");
+            }
+
+
+            
+        }
+        else
+        {
+            Debug.Log("No object assigned to search for the script.");
+        }
+    }
+
+  
+    /// <summary>
+    /// Extracts the information of the reflection and return a generationData with all the information
+    /// </summary>
+    /// <param name="scriptType"></param>
+    /// <returns></returns>
+    private static ReflectionData GenerateReflectionData(Type scriptType)
+    {
+        ReflectionData reflectionData = new ReflectionData();
+
+        MethodInfo[] methods = scriptType.GetMethods();
+        foreach (MethodInfo method in methods)
+        {
+            reflectionData.methodNames.Add(method.Name);
+        }
+
+        FieldInfo[] fields = scriptType.GetFields();
+        foreach (FieldInfo field in fields)
+        {
+            reflectionData.variableNames.Add(field.Name);
+            reflectionData.variableTypes.Add(field.FieldType.ToString());
+        }
+
+        PropertyInfo[] properties = scriptType.GetProperties();
+        foreach (PropertyInfo property in properties)
+        {
+            reflectionData.PropertyName.Add(property.Name);
+        }
+
+        return reflectionData;
+    }
+
+
+
+
+    private void PopulateVariablesList(ReflectionData reflectionData) 
+    {
+        
+        for (int i = 0; i < reflectionData.variableNames.Count; i++)
+        {
+            string name = reflectionData.variableNames[i];
+            string typeName = reflectionData.variableTypes[i];
+
+            Type type = Type.GetType(typeName);
+            object defaultValue = Activator.CreateInstance(type);
+
+            Variable<object> variable = new Variable<object>(name, defaultValue);
+            variablesList.Add(variable);
+        }
+
+    }
+
+
+
+
+}
+
+
+[Serializable]
+public class ReflectionData
+{
+    public List<string> methodNames = new List<string>();
+    public List<string> variableNames = new List<string>();
+    public List<string> variableTypes = new List<string>();
+    public List<string> PropertyName = new List<string>();
+}
+
+/*
     public bool newChanges = false;
     //public NewRules theRules = new NewRules();
     public List<Variable> varList = new List<Variable>();
@@ -88,7 +204,7 @@ public class Rules
         catch (Exception)
         {
             Debug.Log("Unable to save dictionary");
-        }*/
+        } // 8/ HERE
     }
 
 
@@ -107,7 +223,7 @@ public class Rules
             movement.desiredWalkDirection = varList[5].valueFloat;
             movement.knockbackFinished = varList[6].valueBool;
             //jumpMovement.canDoubleJump = varList[7].valueBool;
-            //floorD.isTouchingFloor = varList[8].valueBool;*/
+            //floorD.isTouchingFloor = varList[8].valueBool;// 8/ HERE
             newChanges = false;
         }
 
@@ -383,3 +499,4 @@ public class Rules
 
 
 }
+*/

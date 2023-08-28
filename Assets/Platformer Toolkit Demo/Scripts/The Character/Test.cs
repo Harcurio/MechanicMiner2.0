@@ -83,6 +83,7 @@ public class Test : MonoBehaviour
 
 }
 
+/*
 [System.Serializable]
 public class ReflectionData
 {
@@ -91,4 +92,4 @@ public class ReflectionData
     public List<string> variableTypes = new List<string>();
     public List<string> PropertyName = new List<string>();
 
-}
+}*/

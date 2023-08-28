@@ -1,81 +1,189 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Effect
 {
-    public enum effects
+    public enum EffectType
     {
-        add,
-        subtract,
-        multiply,
-        divide,
-        residue,
-        change
+        Add,
+        Subtract,
+        Multiply,
+        Divide,
+        ChangeBool,
+        MovePosition
     }
 
-    public int applyEffect(int var, effects x, int quantity)
+    public static void ApplyEffect(ref Variable<int> variable, EffectType effectType, int value)
     {
-        switch ((int)x)
+        ApplyArithmeticEffect(ref variable, effectType, value);
+    }
+
+    public static void ApplyEffect(ref Variable<float> variable, EffectType effectType, float value)
+    {
+        ApplyArithmeticEffect(ref variable, effectType, value);
+    }
+
+    public static void ApplyEffect(ref Variable<double> variable, EffectType effectType, double value)
+    {
+        ApplyArithmeticEffect(ref variable, effectType, value);
+    }
+
+    public static void ApplyEffect(ref Variable<bool> variable, EffectType effectType)
+    {
+        ApplyBoolEffect(ref variable, effectType);
+    }
+
+    public static void ApplyEffect(ref Variable<Vector2> variable, EffectType effectType, Vector2 value)
+    {
+        ApplyVectorEffect(ref variable, effectType, value);
+    }
+
+    public static void ApplyEffect(ref Variable<Vector3> variable, EffectType effectType, Vector3 value)
+    {
+        ApplyVectorEffect(ref variable, effectType, value);
+    }
+
+    public static void ApplyEffect(ref Variable<Transform> variable, EffectType effectType, Transform value)
+    {
+        ApplyTransformEffect(ref variable, effectType, value);
+    }
+
+    private static void ApplyArithmeticEffect(ref Variable<int> variable, EffectType effectType, int value)
+    {
+        switch (effectType)
         {
-            case 0:
-                return var + quantity;
-            case 1:
-                return var - quantity;
-            case 2:
-                return var * quantity;
-            case 3:
-                if (quantity == 0)
-                    return -1;
-                return var / quantity;
-            case 4:
-                return var % quantity;
+            case EffectType.Add:
+                variable.Value += value;
+                break;
+            case EffectType.Subtract:
+                variable.Value -= value;
+                break;
+            case EffectType.Multiply:
+                variable.Value *= value;
+                break;
+            case EffectType.Divide:
+                if (value != 0)
+                    variable.Value /= value;
+                else
+                    Debug.LogWarning("Division by zero!");
+                break;
             default:
+                throw new ArgumentOutOfRangeException(nameof(effectType), effectType, null);
+        }
+    }
+
+    private static void ApplyArithmeticEffect(ref Variable<float> variable, EffectType effectType, float value)
+    {
+        switch (effectType)
+        {
+            case EffectType.Add:
+                variable.Value += value;
+                break;
+            case EffectType.Subtract:
+                variable.Value -= value;
+                break;
+            case EffectType.Multiply:
+                variable.Value *= value;
+                break;
+            case EffectType.Divide:
+                if (Mathf.Abs(value) > float.Epsilon)
+                    variable.Value /= value;
+                else
+                    Debug.LogWarning("Division by zero!");
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(effectType), effectType, null);
+        }
+    }
+
+    private static void ApplyArithmeticEffect(ref Variable<double> variable, EffectType effectType, double value)
+    {
+        switch (effectType)
+        {
+            case EffectType.Add:
+                variable.Value += value;
+                break;
+            case EffectType.Subtract:
+                variable.Value -= value;
+                break;
+            case EffectType.Multiply:
+                variable.Value *= value;
+                break;
+            case EffectType.Divide:
+                if (Math.Abs(value) > double.Epsilon)
+                    variable.Value /= value;
+                else
+                    Debug.LogWarning("Division by zero!");
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(effectType), effectType, null);
+        }
+    }
+
+    private static void ApplyBoolEffect(ref Variable<bool> variable, EffectType effectType)
+    {
+        if (effectType == EffectType.ChangeBool)
+        {
+            variable.Value = !variable.Value;
+        }
+        else
+        {
+            throw new ArgumentOutOfRangeException(nameof(effectType), effectType, null);
+        }
+    }
+
+    private static void ApplyVectorEffect(ref Variable<Vector2> variable, EffectType effectType, Vector2 value)
+    {
+        switch (effectType)
+        {
+            case EffectType.Add:
+                variable.Value += value;
+                break;
+            case EffectType.Subtract:
+                variable.Value -= value;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(effectType), effectType, null);
+        }
+    }
+
+
+    private static void ApplyVectorEffect(ref Variable<Vector3> variable, EffectType effectType, Vector3 value)
+    {
+        switch (effectType)
+        {
+            case EffectType.Add:
+                variable.Value += value;
+                break;
+            case EffectType.Subtract:
+                variable.Value -= value;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(effectType), effectType, null);
+        }
+    }
+
+    private static void ApplyTransformEffect(ref Variable<Transform> variable, EffectType effectType, Transform value)
+    {
+        Transform dynamicVariableValue = variable.Value;
+
+        switch (effectType)
+        {
+            case EffectType.MovePosition:
+                if (value != null)
+                {
+                    dynamicVariableValue.position += value.position;
+                }
+                else
+                {
+                    Debug.LogWarning("Invalid value for MovePosition effect.");
+                }
+                break;
+            default:
+                Debug.LogWarning("Effect not supported for Transform variables.");
                 break;
         }
-        return -1;
     }
-
-    public float applyEffect(float var, effects x, float quantity)
-    {
-        switch ((int)x)
-        {
-            case 0:
-                return (float)(var + quantity);
-            case 1:
-                return (float)(var - quantity);
-            case 2:
-                return (float)(var * quantity);
-            case 3:
-                if (quantity == 0)
-                    return -1;
-                return (float)(var / quantity);
-            case 4:
-                return (float)(var % quantity);
-            default:
-                break;
-        }
-        return -1;
-    }
-
-    public bool applyEffect(bool var, effects x)
-    {
-        if ((int)x == 5)
-        {
-            if (var)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-
-
-
 }
