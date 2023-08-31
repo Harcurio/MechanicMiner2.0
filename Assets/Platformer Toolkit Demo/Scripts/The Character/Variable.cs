@@ -2,19 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Variable<T>  {
+
+public interface IVariable
+{
+    string Name { get; }
+    object GetValue();
+}
+public class Variable<T> : IVariable {
 
     public string Name { get; set; }
     public T Value { get; set; }
 
 
-    public Variable(string Name, T Value) 
+    public Variable(string Name, T Value)
     {
         this.Name = Name;
         this.Value = Value;
     }
 
+    public object GetValue()
+    {
+        return Value;
+    }
+
 }
+
+
 
 public struct Vector2Wrapper 
 { 

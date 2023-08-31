@@ -13,6 +13,7 @@ public class Test : MonoBehaviour
 
     void Start()
     {
+
         // Verificar si se ha asignado el objeto en el inspector
         if (objetoParaBuscar != null)
         {
@@ -47,9 +48,11 @@ public class Test : MonoBehaviour
                 FieldInfo[] fields = scriptType.GetFields();
                 foreach (FieldInfo field in fields)
                 {
+                    object variableValue = field.GetValue(script);
                     reflectionData.variableNames.Add(field.Name);
                     reflectionData.variableTypes.Add(field.FieldType.ToString());
-                    //Debug.Log("Variable Name: " + field.Name + ", Variable Type: " + field.FieldType);
+                    reflectionData.variableValues.Add(variableValue.ToString());
+
                 }
                 
                 PropertyInfo[] pis = scriptType.GetProperties();
@@ -90,6 +93,7 @@ public class ReflectionData
     public List<string> methodNames = new List<string>();
     public List<string> variableNames = new List<string>();
     public List<string> variableTypes = new List<string>();
+    public List<object> variableValues = new List<object>();
     public List<string> PropertyName = new List<string>();
 
 }*/

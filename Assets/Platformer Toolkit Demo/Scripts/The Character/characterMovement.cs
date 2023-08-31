@@ -38,7 +38,7 @@ namespace GMTK.PlatformerToolkit
         public int testint;
         public double testdouble;
         public string teststring;
-        public Transform testtransform;
+        //public Transform testtransform;
         public Vector3 testvector3;
 
         [Header("Current State")]
@@ -50,6 +50,7 @@ namespace GMTK.PlatformerToolkit
             //Find the character's Rigidbody and ground detection script
             body = GetComponent<Rigidbody2D>();
             ground = GetComponent<characterGround>();
+            //testtransform = GetComponent<Transform>();
         }
 
         public void OnMovement(InputAction.CallbackContext context)

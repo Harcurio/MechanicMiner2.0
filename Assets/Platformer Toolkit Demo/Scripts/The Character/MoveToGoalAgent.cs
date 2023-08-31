@@ -17,7 +17,7 @@ public class MoveToGoalAgent : Agent
     GameObject _goal;
 
     public  Vector2 toGoal;
-    double contadorvalue = 0f;
+    //double contadorvalue = 0f;
 
     void Awake()
     {

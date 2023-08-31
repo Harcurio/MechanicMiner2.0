@@ -104,7 +104,6 @@
         "testint",
         "testdouble",
         "teststring",
-        "testtransform",
         "testvector3",
         "onGround",
         "pressingKey"
@@ -123,10 +122,27 @@
         "System.Int32",
         "System.Double",
         "System.String",
-        "UnityEngine.Transform",
         "UnityEngine.Vector3",
         "System.Boolean",
         "System.Boolean"
+    ],
+    "variableValues": [
+        "9.01",
+        "79",
+        "76",
+        "76",
+        "80",
+        "80",
+        "80",
+        "True",
+        "0",
+        "(0.00, 0.00)",
+        "0",
+        "0",
+        "",
+        "(0.00, 0.00, 0.00)",
+        "True",
+        "False"
     ],
     "PropertyName": [
         "useGUILayout",

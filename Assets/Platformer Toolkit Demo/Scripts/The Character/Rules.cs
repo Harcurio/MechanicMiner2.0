@@ -6,7 +6,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Reflection;
 
-public class Rules
+public class Rules : MonoBehaviour
 {
     //class to check reflection variables
     public GameObject objectToSearch;
@@ -14,10 +14,14 @@ public class Rules
 
     //
     private string jsonData;
-    public  ReflectionData reflectionData;
+    ReflectionData reflectionData;
 
-    //variables that can be modified 
-    public List<Variable<object>> variablesList = new List<Variable<object>>();
+    //variables that can be modified and the list for neighbors that will be generated >:D
+    List<IVariable> variablesList = new List<IVariable>();
+    List<IVariable> neighbors = new List<IVariable>();
+    IVariable randomVariable;
+    public float rangeNeighbors;
+    public int quantityNeighbors;
 
     private void Start()
     {
@@ -30,16 +34,19 @@ public class Rules
                 Debug.Log($"Found the script '{scriptName}' on the assigned object");
 
                 Type scriptType = script.GetType();
-                reflectionData = GenerateReflectionData(scriptType);
+                reflectionData = GenerateReflectionData(scriptType, script);
 
                 jsonData = JsonUtility.ToJson(reflectionData, true);
                 string savePath = Path.Combine(Application.dataPath, "ReflectionData.json");
                 File.WriteAllText(savePath, jsonData);
 
                 Debug.Log($"Reflection data saved at {savePath}");
+                Debug.Log("saving information in variables class");
 
                 //CODE CONTINUES HERE
-                //NEED A FUNCTION THAT WILL GET THE NEXT FUNCTIONS
+                PopulateVariablesList(reflectionData);
+                neighbors = GenerateNeighbors(randomVariable,rangeNeighbors,quantityNeighbors);
+                //printVariables();// is working...
             }
             else
             {
@@ -47,7 +54,7 @@ public class Rules
             }
 
 
-            
+
         }
         else
         {
@@ -55,13 +62,13 @@ public class Rules
         }
     }
 
-  
+
     /// <summary>
     /// Extracts the information of the reflection and return a generationData with all the information
     /// </summary>
     /// <param name="scriptType"></param>
     /// <returns></returns>
-    private static ReflectionData GenerateReflectionData(Type scriptType)
+    private static ReflectionData GenerateReflectionData(Type scriptType, Component script)
     {
         ReflectionData reflectionData = new ReflectionData();
 
@@ -74,8 +81,11 @@ public class Rules
         FieldInfo[] fields = scriptType.GetFields();
         foreach (FieldInfo field in fields)
         {
+            object variableValue = field.GetValue(script);
             reflectionData.variableNames.Add(field.Name);
             reflectionData.variableTypes.Add(field.FieldType.ToString());
+            reflectionData.variableValues.Add(variableValue.ToString());
+
         }
 
         PropertyInfo[] properties = scriptType.GetProperties();
@@ -89,26 +99,301 @@ public class Rules
 
 
 
-
-    private void PopulateVariablesList(ReflectionData reflectionData) 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="reflectionData"></param>
+    private void PopulateVariablesList(ReflectionData reflectionData)
     {
-        
+
         for (int i = 0; i < reflectionData.variableNames.Count; i++)
         {
             string name = reflectionData.variableNames[i];
             string typeName = reflectionData.variableTypes[i];
+            string value = reflectionData.variableValues[i];
+            // Type type = Type.GetType(typeName);
+            // object defaultValue = Activator.CreateInstance(type);
 
-            Type type = Type.GetType(typeName);
-            object defaultValue = Activator.CreateInstance(type);
+            // Variable<object> variable = new Variable<object>(name, defaultValue);
+            //variablesList.Add(variable);
 
-            Variable<object> variable = new Variable<object>(name, defaultValue);
-            variablesList.Add(variable);
+            if (typeName == "System.Single")
+            {
+
+                // Variable<float> floatVariable = new Variable<float>(name, float.Parse(value));
+                variablesList.Add(new Variable<float>(name, float.Parse(value)));
+
+            }
+            else if (typeName == "System.Boolean")
+            {
+                variablesList.Add(new Variable<bool>(name, bool.Parse(value)));
+            }
+            else if (typeName == "System.Double")
+            {
+                variablesList.Add(new Variable<double>(name, double.Parse(value)));
+            }
+            else if (typeName == "System.Int32")
+            {
+                variablesList.Add(new Variable<int>(name, int.Parse(value)));
+            }
+            else if (typeName == "System.String")
+            {
+                variablesList.Add(new Variable<string>(name, value));
+            }
+            else if (typeName == "UnityEngine.Vector2")
+            {
+                value = value.Trim('(', ')');
+                Vector2 parsedVector;
+                string[] components = value.Split(',');
+                if (components.Length == 2 && float.TryParse(components[0], out float x) && float.TryParse(components[1], out float y))
+                {
+                    parsedVector = new Vector2(x, y);
+                    variablesList.Add(new Variable<Vector2>(name, parsedVector)); //here is the add
+                    //Debug.Log($"Parsed Vector2: {parsedVector}");
+                }
+                else
+                {
+                    Debug.LogError("Invalid vector string format");
+                }
+
+
+
+            }
+            else if (typeName == "UnityEngine.Vector3")
+            {
+                value = value.Trim('(', ')');
+                string[] components = value.Split(',');
+
+                // Parsing the components as floats
+                if (components.Length == 3 &&
+                    float.TryParse(components[0], out float x) &&
+                    float.TryParse(components[1], out float y) &&
+                    float.TryParse(components[2], out float z))
+                {
+                    Vector3 parsedVector = new Vector3(x, y, z);
+                    variablesList.Add(new Variable<Vector3>(name, parsedVector)); //here is the add
+                    //Debug.Log($"Parsed Vector3: {parsedVector}");
+                }
+                else
+                {
+                    Debug.LogError("Invalid vector string format");
+                }
+            }
+            else if (typeName == "UnityEngine.Transform")
+            {
+                Debug.LogError("Transform not implemented yet...");
+            }
+            else
+            {
+                Debug.Log("Variable type not compatible with class Variable prease check if is an important variable");
+            }
         }
 
     }
 
 
+    public void printVariables(List<IVariable> variablesList)
+    {
+        foreach (var variable in variablesList)
+        {
+            Debug.Log($"Name: {variable.Name}, Type: {variable.GetValue().GetType()}, Value: {variable.GetValue()}");
+        }
 
+    }
+
+    //we can select a random variable to start the generation... 
+    public IVariable getRandomVariable()
+    {
+        IVariable toModify;
+        int location = UnityEngine.Random.Range(0, this.variablesList.Count);
+        toModify = this.variablesList[location];
+        return toModify;
+    }
+
+    // this function needs to retur to the original value of the variable 
+    public void resetVariables()
+    {
+        //this.varList = this.oldVarList; // old code
+    }
+
+
+    //function to update with new changes made...
+    public void updatevariables()
+    {
+        /*
+         * OLD CODE
+         * aqui creo que solo nececitamos actualizar la variable que fue modificada...
+         * 
+        if (newChanges)
+        {
+            
+            Debug.Log(" changes were done......");
+            movement.knockbackStrength = varList[0].valueFloat;
+            movement.knockBackLength = varList[1].valueFloat;
+            movement.walkSpeed = varList[2].valueFloat;
+            movement.knockbackTimeCount = varList[3].valueFloat;
+            movement.knockFromRight = varList[4].valueBool;
+            movement.desiredWalkDirection = varList[5].valueFloat;
+            movement.knockbackFinished = varList[6].valueBool;
+            //jumpMovement.canDoubleJump = varList[7].valueBool;
+            //floorD.isTouchingFloor = varList[8].valueBool;
+            newChanges = false;
+        }*/
+
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="variable"></param>
+    /// <param name="range"></param>
+    /// <param name="numNeighbors"></param>
+    /// <returns></returns>
+    private List<IVariable> GenerateNeighbors(IVariable variable, float range, int numNeighbors)
+    {
+
+        List<IVariable> neighbors = new List<IVariable>();
+
+
+        if (variable.GetValue() is double doubleValue)
+        {
+            // Ensure distinct neighbors with even distribution
+            HashSet<double> neighborValues = new HashSet<double>();
+            while (neighborValues.Count < numNeighbors)
+            {
+                double neighborValue = UnityEngine.Random.Range((float)(doubleValue - range / 2), (float)(doubleValue + range / 2));
+                neighborValues.Add(neighborValue);
+            }
+
+            int index = 1;
+            foreach (var value in neighborValues)
+            {
+                string neighborName = $"{variable.Name}_neighbor{index}";
+                Variable<double> neighborVariable = new Variable<double>(neighborName, value);
+                neighbors.Add(neighborVariable);
+                index++;
+            }
+        }
+        else if (variable.GetValue() is float floatValue)
+        {
+            // Ensure distinct neighbors with even distribution
+            HashSet<float> neighborValues = new HashSet<float>();
+            while (neighborValues.Count < numNeighbors)
+            {
+                float neighborValue = UnityEngine.Random.Range(floatValue - range / 2, floatValue + range / 2);
+                neighborValues.Add(neighborValue);
+            }
+
+            int index = 1;
+            foreach (var value in neighborValues)
+            {
+                string neighborName = $"{variable.Name}_neighbor{index}";
+                Variable<float> neighborVariable = new Variable<float>(neighborName, value);
+                neighbors.Add(neighborVariable);
+                index++;
+            }
+        }
+        else if (variable.GetValue() is int intValue)
+        {
+            // Ensure distinct neighbors with even distribution
+            HashSet<int> neighborValues = new HashSet<int>();
+            while (neighborValues.Count < numNeighbors)
+            {
+                int neighborValue = UnityEngine.Random.Range(intValue - (int)(range / 2), intValue + (int)(range / 2) + 1);
+                neighborValues.Add(neighborValue);
+            }
+
+            int index = 1;
+            foreach (var value in neighborValues)
+            {
+                string neighborName = $"{variable.Name}_neighbor{index}";
+                Variable<int> neighborVariable = new Variable<int>(neighborName, value);
+                neighbors.Add(neighborVariable);
+                index++;
+            }
+        }
+        else if (variable.GetValue() is Vector2 vector2Value)
+        {
+            // Ensure distinct neighbors with even distribution
+            HashSet<Vector2> neighborValues = new HashSet<Vector2>();
+            while (neighborValues.Count < numNeighbors)
+            {
+                Vector2 neighborValue = vector2Value + UnityEngine.Random.insideUnitCircle * range;
+                neighborValues.Add(neighborValue);
+            }
+
+            int index = 1;
+            foreach (var value in neighborValues)
+            {
+                string neighborName = $"{variable.Name}_neighbor{index}";
+                Variable<Vector2> neighborVariable = new Variable<Vector2>(neighborName, value);
+                neighbors.Add(neighborVariable);
+                index++;
+            }
+        }
+        else if (variable.GetValue() is Vector3 vector3Value)
+        {
+            // Ensure distinct neighbors with even distribution
+            HashSet<Vector3> neighborValues = new HashSet<Vector3>();
+            while (neighborValues.Count < numNeighbors)
+            {
+                Vector3 neighborValue = vector3Value + UnityEngine.Random.insideUnitSphere * range;
+                neighborValues.Add(neighborValue);
+            }
+
+            int index = 1;
+            foreach (var value in neighborValues)
+            {
+                string neighborName = $"{variable.Name}_neighbor{index}";
+                Variable<Vector3> neighborVariable = new Variable<Vector3>(neighborName, value);
+                neighbors.Add(neighborVariable);
+                index++;
+            }
+        }
+        else if (variable.GetValue() is string stringValue)
+        {
+            // Ensure distinct neighbors with even distribution
+            HashSet<string> neighborValues = new HashSet<string>();
+            while (neighborValues.Count < numNeighbors)
+            {
+                int randomIndex = UnityEngine.Random.Range(0, stringValue.Length);
+                char randomChar = (char)('a' + UnityEngine.Random.Range(0, 26));
+                string neighborValue = stringValue.Substring(0, randomIndex) + randomChar + stringValue.Substring(randomIndex + 1);
+                neighborValues.Add(neighborValue);
+            }
+
+            int index = 1;
+            foreach (var value in neighborValues)
+            {
+                string neighborName = $"{variable.Name}_neighbor{index}";
+                Variable<string> neighborVariable = new Variable<string>(neighborName, value);
+                neighbors.Add(neighborVariable);
+                index++;
+            }
+        }
+        else if (variable.GetValue() is bool boolValue) //should I get just a pair of bool? 
+        {
+            // Generate distinct neighbors for bool variables
+            HashSet<bool> neighborValues = new HashSet<bool>();
+            while (neighborValues.Count < numNeighbors)
+            {
+                bool neighborValue = !boolValue; // Flip the value
+                neighborValues.Add(neighborValue);
+            }
+
+            int index = 1;
+            foreach (var value in neighborValues)
+            {
+                string neighborName = $"{variable.Name}_neighbor{index}";
+                Variable<bool> neighborVariable = new Variable<bool>(neighborName, value);
+                neighbors.Add(neighborVariable);
+                index++;
+            }
+        }
+
+        return neighbors;
+
+    }
 
 }
 
@@ -119,7 +404,9 @@ public class ReflectionData
     public List<string> methodNames = new List<string>();
     public List<string> variableNames = new List<string>();
     public List<string> variableTypes = new List<string>();
+    public List<string> variableValues = new List<string>();
     public List<string> PropertyName = new List<string>();
+    
 }
 
 /*
@@ -168,14 +455,7 @@ public class ReflectionData
         this.varList = this.oldVarList;
     }
 
-    public Variable getRandomVariable()
-    {
-        Variable toModify;
-        int location = UnityEngine.Random.Range(0, this.varList.Count);
-        toModify = this.varList[location];
-        return toModify;
-    }
-
+    
     //need to check type of variable also olverload this function.
     //complexity (O) (Nx4)^2 aprox
     public void fillDictWalkSpeed(Variable var, float x1, float x2, float y1, float y2)
