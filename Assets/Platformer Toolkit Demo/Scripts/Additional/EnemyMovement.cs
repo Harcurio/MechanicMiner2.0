@@ -6,18 +6,21 @@ public class EnemyMovement : MonoBehaviour
 {
     private float speed = 2.75f;    
 
-    private bool goRight;
+    public bool goRight;
 
     private float timeCounter;
 
-    private float timeToChange = 4f;// 4 default
+    private float timeToChange = 2f;// 4 default
 
+    public Vector2 previousPosition;
+    public Vector2 localVelocity;
 
     bool change = false;
 
     void Start()
     {
-        timeCounter = timeToChange; 
+        timeCounter = timeToChange;
+        previousPosition = transform.position;
     }
 
     void differentTime() 
@@ -50,5 +53,17 @@ public class EnemyMovement : MonoBehaviour
                 differentTime();
             }*/
         }
+
+        // Calculate the change in position
+        Vector2 positionChange = (Vector2)transform.position - previousPosition;
+
+        // Calculate the local velocity (change in position / change in time)
+        localVelocity = positionChange / Time.deltaTime;
+
+        // Store the current position for the next frame
+        previousPosition = (Vector2)transform.position;
+
+        // Use localVelocity as needed (e.g., print it to the console)
+        //Debug.Log("Local Velocity: " + localVelocity);
     }
 }

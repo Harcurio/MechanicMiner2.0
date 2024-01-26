@@ -1,0 +1,475 @@
+
+
+// original from pretrained information 
+
+max_steps: 1500000
+    time_horizon: 320
+    summary_freq: 30000
+
+
+/// for training... 
+
+
+
+(base) C:\Users\Johor>conda activate mm
+
+(mm) C:\Users\Johor>mlagents-learn C:\Users\Johor\results\configuration.yaml --env=C:\Users\Johor\bmm0\mm2 --time-scale=1 --num-envs=5 --run-id=test39 --force
+
+            ┐  ╖
+        ╓╖╬│╡  ││╬╖╖
+    ╓╖╬│││││┘  ╬│││││╬╖
+ ╖╬│││││╬╜        ╙╬│││││╖╖                               ╗╗╗
+ ╬╬╬╬╖││╦╖        ╖╬││╗╣╣╣╬      ╟╣╣╬    ╟╣╣╣             ╜╜╜  ╟╣╣
+ ╬╬╬╬╬╬╬╬╖│╬╖╖╓╬╪│╓╣╣╣╣╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╒╣╣╖╗╣╣╣╗   ╣╣╣ ╣╣╣╣╣╣ ╟╣╣╖   ╣╣╣
+ ╬╬╬╬┐  ╙╬╬╬╬│╓╣╣╣╝╜  ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╣╙ ╙╣╣╣  ╣╣╣ ╙╟╣╣╜╙  ╫╣╣  ╟╣╣
+ ╬╬╬╬┐     ╙╬╬╣╣      ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣     ╣╣╣┌╣╣╜
+ ╬╬╬╜       ╬╬╣╣      ╙╝╣╣╬      ╙╣╣╣╗╖╓╗╣╣╣╜ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣╦╓    ╣╣╣╣╣
+ ╙   ╓╦╖    ╬╬╣╣   ╓╗╗╖            ╙╝╣╣╣╣╝╜   ╘╝╝╜   ╝╝╝  ╝╝╝   ╙╣╣╣    ╟╣╣╣
+   ╩╬╬╬╬╬╬╦╦╬╬╣╣╗╣╣╣╣╣╣╣╝                                             ╫╣╣╣╣
+      ╙╬╬╬╬╬╬╬╣╣╣╣╣╣╝╜
+          ╙╬╬╬╣╣╣╜
+             ╙
+
+ Version information:
+  ml-agents: 0.29.0,
+  ml-agents-envs: 0.29.0,
+  Communicator API: 1.5.0,
+  PyTorch: 1.7.1+cu110
+[INFO] Connected to Unity environment with package version 2.0.1 and communication version 1.5.0
+[INFO] Connected to Unity environment with package version 2.0.1 and communication version 1.5.0
+[INFO] Connected to Unity environment with package version 2.0.1 and communication version 1.5.0
+[INFO] Connected to Unity environment with package version 2.0.1 and communication version 1.5.0
+[INFO] Connected to Unity environment with package version 2.0.1 and communication version 1.5.0
+[INFO] Connected new brain: Move to Goal?team=0
+[INFO] Connected new brain: Move to Goal?team=0
+[ERROR] SubprocessEnvManager had workers that didn't signal shutdown
+[ERROR] A SubprocessEnvManager worker did not shut down correctly so it was forcefully terminated.
+[ERROR] A SubprocessEnvManager worker did not shut down correctly so it was forcefully terminated.
+[ERROR] A SubprocessEnvManager worker did not shut down correctly so it was forcefully terminated.
+Traceback (most recent call last):
+  File "C:\Users\Johor\anaconda3\envs\mm\lib\runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "C:\Users\Johor\anaconda3\envs\mm\lib\runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "C:\Users\Johor\anaconda3\envs\mm\Scripts\mlagents-learn.exe\__main__.py", line 7, in <module>
+  File "C:\Users\Johor\anaconda3\envs\mm\lib\site-packages\mlagents\trainers\learn.py", line 260, in main
+    run_cli(parse_command_line())
+  File "C:\Users\Johor\anaconda3\envs\mm\lib\site-packages\mlagents\trainers\learn.py", line 256, in run_cli
+    run_training(run_seed, options, num_areas)
+  File "C:\Users\Johor\anaconda3\envs\mm\lib\site-packages\mlagents\trainers\learn.py", line 132, in run_training
+    tc.start_learning(env_manager)
+  File "C:\Users\Johor\anaconda3\envs\mm\lib\site-packages\mlagents_envs\timers.py", line 305, in wrapped
+    return func(*args, **kwargs)
+  File "C:\Users\Johor\anaconda3\envs\mm\lib\site-packages\mlagents\trainers\trainer_controller.py", line 173, in start_learning
+    self._reset_env(env_manager)
+  File "C:\Users\Johor\anaconda3\envs\mm\lib\site-packages\mlagents_envs\timers.py", line 305, in wrapped
+    return func(*args, **kwargs)
+  File "C:\Users\Johor\anaconda3\envs\mm\lib\site-packages\mlagents\trainers\trainer_controller.py", line 105, in _reset_env
+    env_manager.reset(config=new_config)
+  File "C:\Users\Johor\anaconda3\envs\mm\lib\site-packages\mlagents\trainers\env_manager.py", line 68, in reset
+    self.first_step_infos = self._reset_env(config)
+  File "C:\Users\Johor\anaconda3\envs\mm\lib\site-packages\mlagents\trainers\subprocess_env_manager.py", line 446, in _reset_env
+    ew.previous_step = EnvironmentStep(ew.recv().payload, ew.worker_id, {}, {})
+  File "C:\Users\Johor\anaconda3\envs\mm\lib\site-packages\mlagents\trainers\subprocess_env_manager.py", line 101, in recv
+    raise env_exception
+mlagents_envs.exception.UnityTimeOutException: The Unity environment took too long to respond. Make sure that :
+         The environment does not need user interaction to launch
+         The Agents' Behavior Parameters > Behavior Type is set to "Default"
+         The environment and the Python interface have compatible versions.
+         If you're running on a headless server without graphics support, turn off display by either passing --no-graphics option or build your Unity executable as server build.
+
+(mm) C:\Users\Johor>mlagents-learn C:\Users\Johor\results\configuration.yaml --env=C:\Users\Johor\bmm0\mm2 --time-scale=1 --num-envs=5 --run-id=test39
+
+            ┐  ╖
+        ╓╖╬│╡  ││╬╖╖
+    ╓╖╬│││││┘  ╬│││││╬╖
+ ╖╬│││││╬╜        ╙╬│││││╖╖                               ╗╗╗
+ ╬╬╬╬╖││╦╖        ╖╬││╗╣╣╣╬      ╟╣╣╬    ╟╣╣╣             ╜╜╜  ╟╣╣
+ ╬╬╬╬╬╬╬╬╖│╬╖╖╓╬╪│╓╣╣╣╣╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╒╣╣╖╗╣╣╣╗   ╣╣╣ ╣╣╣╣╣╣ ╟╣╣╖   ╣╣╣
+ ╬╬╬╬┐  ╙╬╬╬╬│╓╣╣╣╝╜  ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╣╙ ╙╣╣╣  ╣╣╣ ╙╟╣╣╜╙  ╫╣╣  ╟╣╣
+ ╬╬╬╬┐     ╙╬╬╣╣      ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣     ╣╣╣┌╣╣╜
+ ╬╬╬╜       ╬╬╣╣      ╙╝╣╣╬      ╙╣╣╣╗╖╓╗╣╣╣╜ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣╦╓    ╣╣╣╣╣
+ ╙   ╓╦╖    ╬╬╣╣   ╓╗╗╖            ╙╝╣╣╣╣╝╜   ╘╝╝╜   ╝╝╝  ╝╝╝   ╙╣╣╣    ╟╣╣╣
+   ╩╬╬╬╬╬╬╦╦╬╬╣╣╗╣╣╣╣╣╣╣╝                                             ╫╣╣╣╣
+      ╙╬╬╬╬╬╬╬╣╣╣╣╣╣╝╜
+          ╙╬╬╬╣╣╣╜
+             ╙
+
+ Version information:
+  ml-agents: 0.29.0,
+  ml-agents-envs: 0.29.0,
+  Communicator API: 1.5.0,
+  PyTorch: 1.7.1+cu110
+[INFO] Connected to Unity environment with package version 2.0.1 and communication version 1.5.0
+[INFO] Connected to Unity environment with package version 2.0.1 and communication version 1.5.0
+[INFO] Connected to Unity environment with package version 2.0.1 and communication version 1.5.0
+[INFO] Connected new brain: Move to Goal?team=0
+[INFO] Connected to Unity environment with package version 2.0.1 and communication version 1.5.0
+[INFO] Connected new brain: Move to Goal?team=0
+[INFO] Connected new brain: Move to Goal?team=0
+[INFO] Connected to Unity environment with package version 2.0.1 and communication version 1.5.0
+[INFO] Connected new brain: Move to Goal?team=0
+[INFO] Connected new brain: Move to Goal?team=0
+[INFO] Hyperparameters for behavior name Move to Goal:
+        trainer_type:   ppo
+        hyperparameters:
+          batch_size:   32
+          buffer_size:  2048
+          learning_rate:        0.0003
+          beta: 0.005
+          epsilon:      0.2
+          lambd:        0.95
+          num_epoch:    5
+          learning_rate_schedule:       linear
+          beta_schedule:        linear
+          epsilon_schedule:     linear
+        network_settings:
+          normalize:    True
+          hidden_units: 128
+          num_layers:   4
+          vis_encode_type:      simple
+          memory:       None
+          goal_conditioning_type:       hyper
+          deterministic:        False
+        reward_signals:
+          extrinsic:
+            gamma:      0.99
+            strength:   1.0
+            network_settings:
+              normalize:        False
+              hidden_units:     128
+              num_layers:       4
+              vis_encode_type:  simple
+              memory:   None
+              goal_conditioning_type:   hyper
+              deterministic:    False
+        init_path:      None
+        keep_checkpoints:       5
+        checkpoint_interval:    50000
+        max_steps:      1500000
+        time_horizon:   320
+        summary_freq:   30000
+        threaded:       False
+        self_play:      None
+        behavioral_cloning:     None
+[INFO] Move to Goal. Step: 30000. Time Elapsed: 230.156 s. Mean Reward: -1.923. Std of Reward: 2.182. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-49837.onnx
+[INFO] Move to Goal. Step: 60000. Time Elapsed: 453.573 s. Mean Reward: -1.802. Std of Reward: 2.250. Training.
+[INFO] Move to Goal. Step: 90000. Time Elapsed: 673.092 s. Mean Reward: -1.637. Std of Reward: 2.240. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-99845.onnx
+[INFO] Move to Goal. Step: 120000. Time Elapsed: 895.112 s. Mean Reward: -1.646. Std of Reward: 2.082. Training.
+[INFO] Move to Goal. Step: 150000. Time Elapsed: 1113.517 s. Mean Reward: -1.439. Std of Reward: 2.107. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-149985.onnx
+[INFO] Move to Goal. Step: 180000. Time Elapsed: 1332.408 s. Mean Reward: -1.164. Std of Reward: 2.295. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-199984.onnx
+[INFO] Move to Goal. Step: 210000. Time Elapsed: 1551.872 s. Mean Reward: -1.273. Std of Reward: 2.210. Training.
+[INFO] Move to Goal. Step: 240000. Time Elapsed: 1778.994 s. Mean Reward: -1.414. Std of Reward: 2.153. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-249979.onnx
+[INFO] Move to Goal. Step: 270000. Time Elapsed: 1999.427 s. Mean Reward: -1.078. Std of Reward: 2.290. Training.
+[INFO] Move to Goal. Step: 300000. Time Elapsed: 2220.790 s. Mean Reward: -1.082. Std of Reward: 2.236. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-299820.onnx
+[INFO] Move to Goal. Step: 330000. Time Elapsed: 2442.092 s. Mean Reward: -0.944. Std of Reward: 2.399. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-349930.onnx
+[INFO] Move to Goal. Step: 360000. Time Elapsed: 2666.624 s. Mean Reward: -1.035. Std of Reward: 2.320. Training.
+[INFO] Move to Goal. Step: 390000. Time Elapsed: 2892.154 s. Mean Reward: -1.046. Std of Reward: 2.364. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-399969.onnx
+[INFO] Move to Goal. Step: 420000. Time Elapsed: 3124.214 s. Mean Reward: -1.001. Std of Reward: 2.366. Training.
+[INFO] Move to Goal. Step: 450000. Time Elapsed: 3346.281 s. Mean Reward: -0.676. Std of Reward: 2.544. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-449983.onnx
+[INFO] Move to Goal. Step: 480000. Time Elapsed: 3570.282 s. Mean Reward: -1.113. Std of Reward: 2.188. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-499998.onnx
+[INFO] Move to Goal. Step: 510000. Time Elapsed: 3795.939 s. Mean Reward: -1.125. Std of Reward: 2.139. Training.
+[INFO] Move to Goal. Step: 540000. Time Elapsed: 4062.259 s. Mean Reward: -0.832. Std of Reward: 2.453. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-549978.onnx
+[INFO] Move to Goal. Step: 570000. Time Elapsed: 4327.680 s. Mean Reward: -0.875. Std of Reward: 2.360. Training.
+[INFO] Move to Goal. Step: 600000. Time Elapsed: 4600.774 s. Mean Reward: -0.896. Std of Reward: 2.412. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-599955.onnx
+[INFO] Move to Goal. Step: 630000. Time Elapsed: 4866.344 s. Mean Reward: -1.082. Std of Reward: 2.215. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-649975.onnx
+[INFO] Move to Goal. Step: 660000. Time Elapsed: 5131.089 s. Mean Reward: -1.047. Std of Reward: 2.251. Training.
+[INFO] Move to Goal. Step: 690000. Time Elapsed: 5402.411 s. Mean Reward: -0.916. Std of Reward: 2.383. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-699966.onnx
+[INFO] Move to Goal. Step: 720000. Time Elapsed: 5666.048 s. Mean Reward: -0.955. Std of Reward: 2.292. Training.
+[INFO] Move to Goal. Step: 750000. Time Elapsed: 5931.229 s. Mean Reward: -0.835. Std of Reward: 2.451. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-749955.onnx
+[INFO] Move to Goal. Step: 780000. Time Elapsed: 6195.061 s. Mean Reward: -0.868. Std of Reward: 2.447. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-799921.onnx
+[INFO] Move to Goal. Step: 810000. Time Elapsed: 6463.281 s. Mean Reward: -0.858. Std of Reward: 2.426. Training.
+[INFO] Move to Goal. Step: 840000. Time Elapsed: 6729.301 s. Mean Reward: -0.748. Std of Reward: 2.505. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-849933.onnx
+[INFO] Move to Goal. Step: 870000. Time Elapsed: 6991.850 s. Mean Reward: -0.830. Std of Reward: 2.363. Training.
+[INFO] Move to Goal. Step: 900000. Time Elapsed: 7266.221 s. Mean Reward: -0.722. Std of Reward: 2.494. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-899990.onnx
+[INFO] Move to Goal. Step: 930000. Time Elapsed: 7533.631 s. Mean Reward: -0.602. Std of Reward: 2.615. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-949913.onnx
+[INFO] Move to Goal. Step: 960000. Time Elapsed: 7798.235 s. Mean Reward: -0.578. Std of Reward: 2.662. Training.
+[INFO] Move to Goal. Step: 990000. Time Elapsed: 8060.733 s. Mean Reward: -0.823. Std of Reward: 2.417. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-999924.onnx
+[INFO] Move to Goal. Step: 1020000. Time Elapsed: 8323.107 s. Mean Reward: -0.669. Std of Reward: 2.525. Training.
+[INFO] Move to Goal. Step: 1050000. Time Elapsed: 8585.317 s. Mean Reward: -0.520. Std of Reward: 2.605. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-1049942.onnx
+[INFO] Move to Goal. Step: 1080000. Time Elapsed: 8850.527 s. Mean Reward: -0.531. Std of Reward: 2.580. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-1099968.onnx
+[INFO] Move to Goal. Step: 1110000. Time Elapsed: 9115.051 s. Mean Reward: -0.576. Std of Reward: 2.486. Training.
+[INFO] Move to Goal. Step: 1140000. Time Elapsed: 9383.061 s. Mean Reward: -0.397. Std of Reward: 2.629. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-1149988.onnx
+[INFO] Move to Goal. Step: 1170000. Time Elapsed: 9649.402 s. Mean Reward: -0.669. Std of Reward: 2.471. Training.
+[INFO] Move to Goal. Step: 1200000. Time Elapsed: 9913.379 s. Mean Reward: -0.396. Std of Reward: 2.743. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-1199987.onnx
+[INFO] Move to Goal. Step: 1230000. Time Elapsed: 10178.726 s. Mean Reward: -0.455. Std of Reward: 2.643. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-1249988.onnx
+[INFO] Move to Goal. Step: 1260000. Time Elapsed: 10435.345 s. Mean Reward: -0.510. Std of Reward: 2.654. Training.
+[INFO] Move to Goal. Step: 1290000. Time Elapsed: 10694.396 s. Mean Reward: -0.382. Std of Reward: 2.677. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-1299951.onnx
+[INFO] Move to Goal. Step: 1320000. Time Elapsed: 10955.775 s. Mean Reward: -0.549. Std of Reward: 2.625. Training.
+[INFO] Move to Goal. Step: 1350000. Time Elapsed: 11221.686 s. Mean Reward: -0.420. Std of Reward: 2.655. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-1349994.onnx
+[INFO] Move to Goal. Step: 1380000. Time Elapsed: 11474.357 s. Mean Reward: -0.393. Std of Reward: 2.677. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-1399982.onnx
+[INFO] Move to Goal. Step: 1410000. Time Elapsed: 11725.382 s. Mean Reward: -0.348. Std of Reward: 2.737. Training.
+[INFO] Move to Goal. Step: 1440000. Time Elapsed: 11983.212 s. Mean Reward: -0.337. Std of Reward: 2.756. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-1449968.onnx
+[INFO] Move to Goal. Step: 1470000. Time Elapsed: 12234.163 s. Mean Reward: -0.212. Std of Reward: 2.788. Training.
+[INFO] Move to Goal. Step: 1500000. Time Elapsed: 12485.160 s. Mean Reward: -0.315. Std of Reward: 2.721. Training.
+[INFO] Exported results\test39\Move to Goal\Move to Goal-1499998.onnx
+[INFO] Exported results\test39\Move to Goal\Move to Goal-1500043.onnx
+[INFO] Copied results\test39\Move to Goal\Move to Goal-1500043.onnx to results\test39\Move to Goal.onnx.
+
+(mm) C:\Users\Johor>mlagents-learn C:\Users\Johor\results\configuration.yaml --env=C:\Users\Johor\bmm0\mm2 --time-scale=1 --num-envs=5 --run-id=test43
+
+            ┐  ╖
+        ╓╖╬│╡  ││╬╖╖
+    ╓╖╬│││││┘  ╬│││││╬╖
+ ╖╬│││││╬╜        ╙╬│││││╖╖                               ╗╗╗
+ ╬╬╬╬╖││╦╖        ╖╬││╗╣╣╣╬      ╟╣╣╬    ╟╣╣╣             ╜╜╜  ╟╣╣
+ ╬╬╬╬╬╬╬╬╖│╬╖╖╓╬╪│╓╣╣╣╣╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╒╣╣╖╗╣╣╣╗   ╣╣╣ ╣╣╣╣╣╣ ╟╣╣╖   ╣╣╣
+ ╬╬╬╬┐  ╙╬╬╬╬│╓╣╣╣╝╜  ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╣╙ ╙╣╣╣  ╣╣╣ ╙╟╣╣╜╙  ╫╣╣  ╟╣╣
+ ╬╬╬╬┐     ╙╬╬╣╣      ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣     ╣╣╣┌╣╣╜
+ ╬╬╬╜       ╬╬╣╣      ╙╝╣╣╬      ╙╣╣╣╗╖╓╗╣╣╣╜ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣╦╓    ╣╣╣╣╣
+ ╙   ╓╦╖    ╬╬╣╣   ╓╗╗╖            ╙╝╣╣╣╣╝╜   ╘╝╝╜   ╝╝╝  ╝╝╝   ╙╣╣╣    ╟╣╣╣
+   ╩╬╬╬╬╬╬╦╦╬╬╣╣╗╣╣╣╣╣╣╣╝                                             ╫╣╣╣╣
+      ╙╬╬╬╬╬╬╬╣╣╣╣╣╣╝╜
+          ╙╬╬╬╣╣╣╜
+             ╙
+
+ Version information:
+  ml-agents: 0.29.0,
+  ml-agents-envs: 0.29.0,
+  Communicator API: 1.5.0,
+  PyTorch: 1.7.1+cu110
+[INFO] Connected to Unity environment with package version 2.0.1 and communication version 1.5.0
+[INFO] Connected to Unity environment with package version 2.0.1 and communication version 1.5.0
+[INFO] Connected new brain: Move to Goal?team=0
+[INFO] Connected to Unity environment with package version 2.0.1 and communication version 1.5.0
+[INFO] Connected to Unity environment with package version 2.0.1 and communication version 1.5.0
+[INFO] Connected new brain: Move to Goal?team=0
+[INFO] Connected to Unity environment with package version 2.0.1 and communication version 1.5.0
+[INFO] Connected new brain: Move to Goal?team=0
+[INFO] Connected new brain: Move to Goal?team=0
+[INFO] Connected new brain: Move to Goal?team=0
+[INFO] Hyperparameters for behavior name Move to Goal:
+        trainer_type:   ppo
+        hyperparameters:
+          batch_size:   32
+          buffer_size:  2048
+          learning_rate:        0.0003
+          beta: 0.005
+          epsilon:      0.2
+          lambd:        0.95
+          num_epoch:    5
+          learning_rate_schedule:       linear
+          beta_schedule:        linear
+          epsilon_schedule:     linear
+        network_settings:
+          normalize:    True
+          hidden_units: 128
+          num_layers:   4
+          vis_encode_type:      simple
+          memory:       None
+          goal_conditioning_type:       hyper
+          deterministic:        False
+        reward_signals:
+          extrinsic:
+            gamma:      0.99
+            strength:   1.0
+            network_settings:
+              normalize:        False
+              hidden_units:     128
+              num_layers:       4
+              vis_encode_type:  simple
+              memory:   None
+              goal_conditioning_type:   hyper
+              deterministic:    False
+        init_path:      None
+        keep_checkpoints:       5
+        checkpoint_interval:    50000
+        max_steps:      1500000
+        time_horizon:   320
+        summary_freq:   30000
+        threaded:       False
+        self_play:      None
+        behavioral_cloning:     None
+[INFO] Move to Goal. Step: 30000. Time Elapsed: 258.640 s. Mean Reward: -2.367. Std of Reward: 1.884. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-49864.onnx
+[INFO] Move to Goal. Step: 60000. Time Elapsed: 521.224 s. Mean Reward: -2.002. Std of Reward: 2.292. Training.
+[INFO] Move to Goal. Step: 90000. Time Elapsed: 782.097 s. Mean Reward: -1.658. Std of Reward: 2.203. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-99888.onnx
+[INFO] Move to Goal. Step: 120000. Time Elapsed: 1038.926 s. Mean Reward: -1.386. Std of Reward: 2.381. Training.
+[INFO] Move to Goal. Step: 150000. Time Elapsed: 1289.690 s. Mean Reward: -1.134. Std of Reward: 2.417. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-149978.onnx
+[INFO] Move to Goal. Step: 180000. Time Elapsed: 1525.576 s. Mean Reward: -1.203. Std of Reward: 2.337. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-199985.onnx
+[INFO] Move to Goal. Step: 210000. Time Elapsed: 1760.056 s. Mean Reward: -1.259. Std of Reward: 2.350. Training.
+[INFO] Move to Goal. Step: 240000. Time Elapsed: 1998.849 s. Mean Reward: -1.640. Std of Reward: 2.180. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-249997.onnx
+[INFO] Move to Goal. Step: 270000. Time Elapsed: 2235.470 s. Mean Reward: -1.532. Std of Reward: 2.205. Training.
+[INFO] Move to Goal. Step: 300000. Time Elapsed: 2470.334 s. Mean Reward: -0.864. Std of Reward: 2.441. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-299912.onnx
+[INFO] Move to Goal. Step: 330000. Time Elapsed: 2712.707 s. Mean Reward: -0.982. Std of Reward: 2.321. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-349958.onnx
+[INFO] Move to Goal. Step: 360000. Time Elapsed: 2947.174 s. Mean Reward: -0.983. Std of Reward: 2.385. Training.
+[INFO] Move to Goal. Step: 390000. Time Elapsed: 3182.151 s. Mean Reward: -0.979. Std of Reward: 2.382. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-399993.onnx
+[INFO] Move to Goal. Step: 420000. Time Elapsed: 3419.128 s. Mean Reward: -1.217. Std of Reward: 2.314. Training.
+[INFO] Move to Goal. Step: 450000. Time Elapsed: 3655.753 s. Mean Reward: -1.080. Std of Reward: 2.474. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-449883.onnx
+[INFO] Move to Goal. Step: 480000. Time Elapsed: 3892.588 s. Mean Reward: -1.168. Std of Reward: 2.476. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-499950.onnx
+[INFO] Move to Goal. Step: 510000. Time Elapsed: 4128.578 s. Mean Reward: -1.223. Std of Reward: 2.269. Training.
+[INFO] Move to Goal. Step: 540000. Time Elapsed: 4368.316 s. Mean Reward: -0.851. Std of Reward: 2.441. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-549998.onnx
+[INFO] Move to Goal. Step: 570000. Time Elapsed: 4605.445 s. Mean Reward: -0.727. Std of Reward: 2.447. Training.
+[INFO] Move to Goal. Step: 600000. Time Elapsed: 4846.119 s. Mean Reward: -0.926. Std of Reward: 2.290. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-599986.onnx
+[INFO] Move to Goal. Step: 630000. Time Elapsed: 5083.127 s. Mean Reward: -0.687. Std of Reward: 2.443. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-649859.onnx
+[INFO] Move to Goal. Step: 660000. Time Elapsed: 5318.960 s. Mean Reward: -0.917. Std of Reward: 2.419. Training.
+[INFO] Move to Goal. Step: 690000. Time Elapsed: 5559.655 s. Mean Reward: -0.818. Std of Reward: 2.535. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-699981.onnx
+[INFO] Move to Goal. Step: 720000. Time Elapsed: 5796.976 s. Mean Reward: -0.776. Std of Reward: 2.548. Training.
+[INFO] Move to Goal. Step: 750000. Time Elapsed: 6031.673 s. Mean Reward: -0.834. Std of Reward: 2.575. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-749969.onnx
+[INFO] Move to Goal. Step: 780000. Time Elapsed: 6268.365 s. Mean Reward: -0.873. Std of Reward: 2.665. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-799816.onnx
+[INFO] Move to Goal. Step: 810000. Time Elapsed: 6504.632 s. Mean Reward: -0.763. Std of Reward: 2.699. Training.
+[INFO] Move to Goal. Step: 840000. Time Elapsed: 6744.233 s. Mean Reward: -0.671. Std of Reward: 2.673. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-849999.onnx
+[INFO] Move to Goal. Step: 870000. Time Elapsed: 6988.684 s. Mean Reward: -0.619. Std of Reward: 2.622. Training.
+[INFO] Move to Goal. Step: 900000. Time Elapsed: 7229.784 s. Mean Reward: -0.709. Std of Reward: 2.663. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-899985.onnx
+[INFO] Move to Goal. Step: 930000. Time Elapsed: 7468.733 s. Mean Reward: -0.806. Std of Reward: 2.604. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-949952.onnx
+[INFO] Move to Goal. Step: 960000. Time Elapsed: 7714.095 s. Mean Reward: -0.886. Std of Reward: 2.504. Training.
+[INFO] Move to Goal. Step: 990000. Time Elapsed: 7954.407 s. Mean Reward: -0.684. Std of Reward: 2.557. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-999979.onnx
+[INFO] Move to Goal. Step: 1020000. Time Elapsed: 8194.483 s. Mean Reward: -0.609. Std of Reward: 2.535. Training.
+[INFO] Move to Goal. Step: 1050000. Time Elapsed: 8440.227 s. Mean Reward: -0.294. Std of Reward: 2.736. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-1049965.onnx
+[INFO] Move to Goal. Step: 1080000. Time Elapsed: 8703.289 s. Mean Reward: -0.439. Std of Reward: 2.667. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-1099951.onnx
+[INFO] Move to Goal. Step: 1110000. Time Elapsed: 8965.035 s. Mean Reward: -0.602. Std of Reward: 2.652. Training.
+[INFO] Move to Goal. Step: 1140000. Time Elapsed: 9229.807 s. Mean Reward: -0.561. Std of Reward: 2.702. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-1149986.onnx
+[INFO] Move to Goal. Step: 1170000. Time Elapsed: 9489.304 s. Mean Reward: -0.256. Std of Reward: 2.850. Training.
+[INFO] Move to Goal. Step: 1200000. Time Elapsed: 9748.472 s. Mean Reward: -0.538. Std of Reward: 2.828. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-1199999.onnx
+[INFO] Move to Goal. Step: 1230000. Time Elapsed: 10005.883 s. Mean Reward: -0.742. Std of Reward: 2.653. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-1249849.onnx
+[INFO] Move to Goal. Step: 1260000. Time Elapsed: 10262.483 s. Mean Reward: -0.681. Std of Reward: 2.655. Training.
+[INFO] Move to Goal. Step: 1290000. Time Elapsed: 10528.768 s. Mean Reward: -0.695. Std of Reward: 2.740. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-1299978.onnx
+[INFO] Move to Goal. Step: 1320000. Time Elapsed: 10787.539 s. Mean Reward: -0.443. Std of Reward: 2.828. Training.
+[INFO] Move to Goal. Step: 1350000. Time Elapsed: 11047.609 s. Mean Reward: -0.530. Std of Reward: 2.692. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-1349978.onnx
+[INFO] Move to Goal. Step: 1380000. Time Elapsed: 11306.684 s. Mean Reward: -0.231. Std of Reward: 2.830. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-1399983.onnx
+[INFO] Move to Goal. Step: 1410000. Time Elapsed: 11570.186 s. Mean Reward: -0.566. Std of Reward: 2.857. Training.
+[INFO] Move to Goal. Step: 1440000. Time Elapsed: 11839.833 s. Mean Reward: -0.382. Std of Reward: 2.928. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-1449930.onnx
+[INFO] Move to Goal. Step: 1470000. Time Elapsed: 12104.110 s. Mean Reward: -0.236. Std of Reward: 2.960. Training.
+[INFO] Move to Goal. Step: 1500000. Time Elapsed: 12360.804 s. Mean Reward: -0.369. Std of Reward: 2.858. Training.
+[INFO] Exported results\test43\Move to Goal\Move to Goal-1499900.onnx
+[INFO] Exported results\test43\Move to Goal\Move to Goal-1500100.onnx
+[INFO] Copied results\test43\Move to Goal\Move to Goal-1500100.onnx to results\test43\Move to Goal.onnx.
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+
+[INFO] Resuming from results\test\Move to Goal.
+[INFO] Resuming training from step 133918.
+[INFO] Move to Goal. Step: 150000. Time Elapsed: 122.151 s. Mean Reward: -0.989. Std of Reward: 2.305. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-149965.onnx
+[INFO] Move to Goal. Step: 180000. Time Elapsed: 344.018 s. Mean Reward: -1.159. Std of Reward: 2.197. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-199967.onnx
+[INFO] Move to Goal. Step: 210000. Time Elapsed: 569.011 s. Mean Reward: -1.199. Std of Reward: 2.282. Training.
+[INFO] Move to Goal. Step: 240000. Time Elapsed: 788.597 s. Mean Reward: -1.139. Std of Reward: 2.249. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-249970.onnx
+[INFO] Move to Goal. Step: 270000. Time Elapsed: 1006.896 s. Mean Reward: -1.088. Std of Reward: 2.414. Training.
+[INFO] Move to Goal. Step: 300000. Time Elapsed: 1228.533 s. Mean Reward: -0.882. Std of Reward: 2.347. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-299999.onnx
+[INFO] Move to Goal. Step: 330000. Time Elapsed: 1452.669 s. Mean Reward: -0.978. Std of Reward: 2.381. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-349998.onnx
+[INFO] Move to Goal. Step: 360000. Time Elapsed: 1672.328 s. Mean Reward: -1.074. Std of Reward: 2.369. Training.
+[INFO] Move to Goal. Step: 390000. Time Elapsed: 1893.197 s. Mean Reward: -0.976. Std of Reward: 2.329. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-399940.onnx
+[INFO] Move to Goal. Step: 420000. Time Elapsed: 2114.366 s. Mean Reward: -0.960. Std of Reward: 2.269. Training.
+[INFO] Move to Goal. Step: 450000. Time Elapsed: 2341.896 s. Mean Reward: -1.008. Std of Reward: 2.332. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-449858.onnx
+[INFO] Move to Goal. Step: 480000. Time Elapsed: 2563.109 s. Mean Reward: -0.834. Std of Reward: 2.515. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-499967.onnx
+[INFO] Move to Goal. Step: 510000. Time Elapsed: 2782.727 s. Mean Reward: -0.953. Std of Reward: 2.354. Training.
+[INFO] Move to Goal. Step: 540000. Time Elapsed: 3010.996 s. Mean Reward: -1.041. Std of Reward: 2.270. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-549960.onnx
+[INFO] Move to Goal. Step: 570000. Time Elapsed: 3231.524 s. Mean Reward: -0.989. Std of Reward: 2.175. Training.
+[INFO] Move to Goal. Step: 600000. Time Elapsed: 3451.487 s. Mean Reward: -1.121. Std of Reward: 2.212. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-599871.onnx
+[INFO] Move to Goal. Step: 630000. Time Elapsed: 3670.984 s. Mean Reward: -0.849. Std of Reward: 2.353. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-649954.onnx
+[INFO] Move to Goal. Step: 660000. Time Elapsed: 3899.424 s. Mean Reward: -0.554. Std of Reward: 2.459. Training.
+[INFO] Move to Goal. Step: 690000. Time Elapsed: 4121.237 s. Mean Reward: -0.770. Std of Reward: 2.329. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-699942.onnx
+[INFO] Move to Goal. Step: 720000. Time Elapsed: 4341.558 s. Mean Reward: -0.650. Std of Reward: 2.600. Training.
+[INFO] Move to Goal. Step: 750000. Time Elapsed: 4562.152 s. Mean Reward: -0.830. Std of Reward: 2.451. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-749918.onnx
+[INFO] Move to Goal. Step: 780000. Time Elapsed: 4789.171 s. Mean Reward: -0.972. Std of Reward: 2.483. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-799932.onnx
+[INFO] Move to Goal. Step: 810000. Time Elapsed: 5009.790 s. Mean Reward: -0.824. Std of Reward: 2.568. Training.
+[INFO] Move to Goal. Step: 840000. Time Elapsed: 5230.207 s. Mean Reward: -0.629. Std of Reward: 2.634. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-849988.onnx
+[INFO] Move to Goal. Step: 870000. Time Elapsed: 5451.893 s. Mean Reward: -0.881. Std of Reward: 2.441. Training.
+[INFO] Move to Goal. Step: 900000. Time Elapsed: 5673.503 s. Mean Reward: -0.497. Std of Reward: 2.708. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-899894.onnx
+[INFO] Move to Goal. Step: 930000. Time Elapsed: 5899.872 s. Mean Reward: -0.657. Std of Reward: 2.567. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-949945.onnx
+[INFO] Move to Goal. Step: 960000. Time Elapsed: 6121.233 s. Mean Reward: -0.742. Std of Reward: 2.669. Training.
+[INFO] Move to Goal. Step: 990000. Time Elapsed: 6343.866 s. Mean Reward: -0.715. Std of Reward: 2.614. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-999921.onnx
+[INFO] Move to Goal. Step: 1020000. Time Elapsed: 6566.250 s. Mean Reward: -0.735. Std of Reward: 2.563. Training.
+[INFO] Move to Goal. Step: 1050000. Time Elapsed: 6795.644 s. Mean Reward: -0.600. Std of Reward: 2.613. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-1049977.onnx
+[INFO] Move to Goal. Step: 1080000. Time Elapsed: 7018.730 s. Mean Reward: -0.533. Std of Reward: 2.692. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-1099986.onnx
+[INFO] Move to Goal. Step: 1110000. Time Elapsed: 7236.441 s. Mean Reward: -0.263. Std of Reward: 2.820. Training.
+[INFO] Move to Goal. Step: 1140000. Time Elapsed: 7462.357 s. Mean Reward: -0.690. Std of Reward: 2.628. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-1149955.onnx
+[INFO] Move to Goal. Step: 1170000. Time Elapsed: 7686.315 s. Mean Reward: -0.511. Std of Reward: 2.679. Training.
+[INFO] Move to Goal. Step: 1200000. Time Elapsed: 7914.503 s. Mean Reward: -0.596. Std of Reward: 2.603. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-1199981.onnx
+[INFO] Move to Goal. Step: 1230000. Time Elapsed: 8145.620 s. Mean Reward: -0.349. Std of Reward: 2.705. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-1249967.onnx
+[INFO] Move to Goal. Step: 1260000. Time Elapsed: 8373.972 s. Mean Reward: -0.504. Std of Reward: 2.738. Training.
+[INFO] Move to Goal. Step: 1290000. Time Elapsed: 8610.514 s. Mean Reward: -0.540. Std of Reward: 2.615. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-1299919.onnx
+[INFO] Move to Goal. Step: 1320000. Time Elapsed: 8832.633 s. Mean Reward: -0.612. Std of Reward: 2.700. Training.
+[INFO] Move to Goal. Step: 1350000. Time Elapsed: 9058.422 s. Mean Reward: -0.441. Std of Reward: 2.756. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-1349968.onnx
+[INFO] Move to Goal. Step: 1380000. Time Elapsed: 9285.807 s. Mean Reward: -0.324. Std of Reward: 2.827. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-1399976.onnx
+[INFO] Move to Goal. Step: 1410000. Time Elapsed: 9509.393 s. Mean Reward: -0.142. Std of Reward: 2.925. Training.
+[INFO] Move to Goal. Step: 1440000. Time Elapsed: 9738.337 s. Mean Reward: -0.435. Std of Reward: 2.688. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-1449905.onnx
+[INFO] Move to Goal. Step: 1470000. Time Elapsed: 9965.330 s. Mean Reward: -0.373. Std of Reward: 2.843. Training.
+[INFO] Move to Goal. Step: 1500000. Time Elapsed: 10191.390 s. Mean Reward: -0.467. Std of Reward: 2.698. Training.
+[INFO] Exported results\test\Move to Goal\Move to Goal-1499976.onnx
+[INFO] Exported results\test\Move to Goal\Move to Goal-1500039.onnx
+[INFO] Copied results\test\Move to Goal\Move to Goal-1500039.onnx to results\test\Move to Goal.onnx.
+

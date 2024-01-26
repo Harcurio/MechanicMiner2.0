@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using GMTK.PlatformerToolkit;
@@ -11,38 +12,128 @@ public class MoveToGoalAgent : Agent
 
     characterMovement _moveScript;
     characterJump _jumpScript;
+    characterJuice _juice_script;
+    EnemyMovement _enemyMoveScript;
+
+    public Rigidbody2D playerrb;
+    //public Rigidbody2D enemyrb; 
+    
     public EnemyGrammar _enemyStript;
 
     //GameOject _goalScript;
     GameObject _goal;
 
-    public  Vector2 toGoal;
+    //counter to change the enemy
+    int countEpisodes = 0;
+
+    //public  Vector2 toGoal;
     //double contadorvalue = 0f;
+
+    //count for goal, enemy...
+    // JSON file
+    string name_file = "logs_player.json";
+    //string filePath = Application.persistentDataPath + ;
+    playerData logsPlayer;
+    int goal_reached = 0;
+    int killed = 0;
 
     void Awake()
     {
         _moveScript = GetComponent<characterMovement>();
         _jumpScript = GetComponent<characterJump>();
+        _juice_script = GetComponent<characterJuice>();
+        //_enemyMoveScript = GetComponent<EnemyMovement>();
+        //playerrb = GetComponent<>();
         //_enemyStript = GetComponent<EnemyGrammar>();
         //_goal = GetComponent<Goal>();
 
-        toGoal =  Vector2.zero;
-        
+        //toGoal = Vector2.zero;
+
         //InstallPresetData();
+
+        //Json initialization saved info
+        logsPlayer = new playerData();
+
+        generateJSON();
+
     }
-    /*
-    private void Start()
-    {
-         _goal = GameObject.FindWithTag("Goal");
-    }
-    */
+    
     public override void OnEpisodeBegin()
     {
+
         float ranX = Random.Range(-15f,27f);
-        _moveScript.transform.position = new Vector2(ranX, -4f);
-        _enemyStript.movePosition();
-        //Debug.Log("ContadorNegativo" + contadorvalue);
+        _moveScript.transform.position = new Vector2(ranX, -2f); //-2 to train both models
+        //_enemyStript.movePosition();
+        //_enemyStript.GenerateEnemy();   //  generate random enemies....
+        _enemyStript.GenerateEnemyFromFile(); //load enemy from file
+
+        
+        countEpisodes++;
     }
+
+    
+    public void generateJSON()
+    {
+
+        //Debug.Log("GENERANDO JSON....?");
+        //logsPlayer.times_killed = killed;
+        //logsPlayer.times_won = goal_reached;
+
+
+        string json = JsonUtility.ToJson(logsPlayer);
+
+        string savePath = Path.Combine(Application.dataPath, name_file);
+       // Debug.Log(Application.dataPath);
+       // Debug.Log(savePath);
+        File.WriteAllText(savePath, json);
+        Debug.Log("logs saved at " + savePath);
+    }
+    
+    public void UpdateJSON(bool won)
+    {
+        string savePath = Path.Combine(Application.dataPath, name_file);
+
+        if (File.Exists(savePath))
+        {
+            string json = File.ReadAllText(savePath);
+
+            logsPlayer = JsonUtility.FromJson<playerData>(json);
+
+            if (won)
+            {
+                logsPlayer.times_won.Add(1);
+                logsPlayer.total_times_won = goal_reached;
+            }
+            else 
+            {
+                logsPlayer.times_won.Add(0);
+            }
+
+            Vector2 _tem = new Vector2(_enemyStript.positionEnemy.position.x, _enemyStript.positionEnemy.position.y);
+            Vector2 _tem1 = new Vector2(transform.position.x, transform.position.y);
+            Vector2 tran_tem = _enemyStript.positionEnemy.position - transform.position;
+
+
+            Vector2 velocityplayer = playerrb.velocity;
+            Vector2 velocityrelativeplayer = velocityplayer - _enemyStript.test.localVelocity;
+            Debug.Log("Local Velocity: " + _enemyStript.test.localVelocity);
+            Debug.Log("local velocity player"+ velocityrelativeplayer);
+
+            //Vector2 relative_velocity = 
+            Vector2 localenemy = _tem - _tem1;
+            Vector2 localplayer = _tem1 - _tem;
+
+            logsPlayer.local_position_enemy.Add(localenemy);
+            logsPlayer.local_position_player.Add(localplayer);
+            logsPlayer.direction_player.Add(tran_tem);
+            logsPlayer.local_player_velocity.Add(velocityrelativeplayer);
+
+            string updatedJson = JsonUtility.ToJson(logsPlayer);
+            File.WriteAllText(savePath, updatedJson);
+            Debug.Log("JSON data updated and saved.");
+        }
+    }
+    
 
     public override void CollectObservations(VectorSensor sensor)
     {
@@ -66,9 +157,9 @@ public class MoveToGoalAgent : Agent
         {
             //press button of new rule
             //Debug.Log("double jump");
-            _jumpScript.doubleJump();//canJumpAgain = true;
-            //_jumpScript.jumping(true);
-            //_jumpScript.pressing(true);
+            //_jumpScript.doubleJump();//canJumpAgain = true;
+            _jumpScript.jumping(true);
+            _jumpScript.pressing(true);
         }
 
         if (actions.DiscreteActions[2] == 1) // Jump
@@ -164,10 +255,16 @@ public class MoveToGoalAgent : Agent
         */
         if (collision.CompareTag("Goal")) 
         {
+            //Debug.Log("player pos" + transform.position.ToString());
+            //Debug.Log("enemy pos" + _enemyStript.positionEnemy.position.ToString());
             Debug.Log("goal reached.");
+            //Debug.Log(_enemyMoveScript.goRight);
+            goal_reached++;
+            UpdateJSON(true);
             SetReward(+5f);
             EndEpisode();
-            //Debug.Log("collision with Goal");
+
+            
         }
 
         if (collision.CompareTag("Wall")) 
@@ -179,11 +276,28 @@ public class MoveToGoalAgent : Agent
         if (collision.CompareTag("Enemy"))
         {
             Debug.Log("muerte");
+            //Debug.Log("player pos"+transform.position.ToString());
+            //Debug.Log("enemy pos"+_enemyStript.positionEnemy.position.ToString());          
+            killed++;
+            UpdateJSON(false);
             SetReward(-1f);
             EndEpisode();
         }
     }
 
 
+
+}
+
+[System.Serializable]
+public class playerData 
+{
+    public int total_times_won;
+    public List<int> times_won;
+    public List<Vector2> local_player_velocity;  // velocityplayer - velocityenemy
+    public List<Vector2> local_enemy_velocity;  // enemy_velocity - player_velocity
+    public List<Vector2> direction_player;
+    public List<Vector2> local_position_player; // player - enemy position 
+    public List<Vector2> local_position_enemy; // enemy - player position
 
 }

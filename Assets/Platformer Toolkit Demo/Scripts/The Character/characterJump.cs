@@ -81,7 +81,6 @@ namespace GMTK.PlatformerToolkit {
         public void OnJump(InputAction.CallbackContext context)
         {
             //This function is called when one of the jump buttons (like space or the A button) is pressed.
-            Debug.Log("estamos saltando");
             if (movementLimiter.instance.CharacterCanMove)
             {
                 //When we press the jump button, tell the script that we desire a jump.

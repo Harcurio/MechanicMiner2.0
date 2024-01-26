@@ -27,8 +27,10 @@ public class EnemyGrammar : MonoBehaviour
     private string result { get; set; }
     string projectPath;
 
-    //parent object 
+    public EnemyMovement test;
 
+    //parent object 
+    public Transform positionEnemy;
     GameObject parentObject;
 
     [SerializeField] public float valueX1;//range 1 of the spawn for x
@@ -45,9 +47,11 @@ public class EnemyGrammar : MonoBehaviour
         }
         else 
         {
-            result = GenerateString();
-            result = RemoveNumbers(result);
-            Weak(result);
+            //GENERATE GRAMMAR FUNCTION...
+            //result = GenerateString();
+            //result = RemoveNumbers(result);
+            //Weak(result);
+           // GenerateEnemy();
         }
         parentObject = new GameObject("Parent");
         //Debug.Log(result);
@@ -59,12 +63,75 @@ public class EnemyGrammar : MonoBehaviour
         // Debug.Log("hllrrbllrre");
         //generatePositions(result); // hhlrree
         //generate the weakest point in the enemy
+        //generatePositions(result); // grupos
+
+        //generateBody();     //posiciones y body?
+        //GenerateObjects(result);
+
+
+
+    }
+
+    
+    public  void GenerateEnemy() 
+    {
+        relativePositions.Clear();
+        squareSizes.Clear();
+        groups.Clear();
+
+        foreach (Transform child in parentObject.transform)
+        {
+            // Destroy each child GameObject
+            Destroy(child.gameObject);
+        }
+
+        result = GenerateString();
+        result = RemoveNumbers(result);
+        Weak(result);
+        //parentObject = new GameObject("Parent");
         generatePositions(result); // grupos
 
         generateBody();     //posiciones y body?
         GenerateObjects(result);
 
+        movePosition();
+    }
 
+    public void GenerateEnemyFromFile() 
+    {
+        relativePositions.Clear();
+        squareSizes.Clear();
+        groups.Clear();
+
+        foreach (Transform child in parentObject.transform)
+        {
+            // Destroy each child GameObject
+            Destroy(child.gameObject);
+        }
+        loadGrammar();
+        generatePositions(result); // grupos
+        generateBody();     //posiciones y body?
+        GenerateObjects(result);
+
+        movePosition();
+    }
+
+
+    public static void EliminateEnemy() 
+    {
+        string projectPath;
+        projectPath = Application.dataPath + "/grammarSaved.txt";
+
+        if (File.Exists(projectPath))
+        {
+            // Delete the file
+            File.Delete(projectPath);
+            Debug.Log("File deleted successfully.");
+        }
+        else
+        {
+            Debug.LogWarning("File not found. Cannot delete.");
+        }
 
     }
 
@@ -76,7 +143,7 @@ public class EnemyGrammar : MonoBehaviour
     private void Weak(string enemy)
     {
 
-        weakspot = Random.Range(0, enemy.Length);
+        this.weakspot = Random.Range(0, enemy.Length);
 
 
     }
@@ -433,6 +500,10 @@ public class EnemyGrammar : MonoBehaviour
         // Crea un nuevo GameObject
         GameObject square = new GameObject("Square" + i.ToString());
 
+        if (i == -1) 
+        {
+            positionEnemy = square.transform;
+        }
         //add tag as enemy
         square.tag = "Enemy";
         square.layer = LayerMask.NameToLayer("Hurt");
@@ -464,11 +535,17 @@ public class EnemyGrammar : MonoBehaviour
 
         if (i == -1)
         {
-            //EnemyMovement myScriptComponent = square.AddComponent<EnemyMovement>();
-            Debug.Log("removimos movimiento");
+            EnemyMovement myScriptComponent = square.AddComponent<EnemyMovement>();
+            //Debug.Log("removimos movimiento");
+            test = square.GetComponent<EnemyMovement>();
         }
 
         return square;
+    }
+
+    private void Update()
+    {
+        //Debug.Log(test.localVelocity);
     }
 
     GameObject GenerateWeakSquare(Vector2 position, Vector2 scale, Transform parent)

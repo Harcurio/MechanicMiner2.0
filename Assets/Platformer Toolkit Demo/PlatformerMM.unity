@@ -5306,7 +5306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SensorName: RayPerceptionSensorGoal
   m_DetectableTags: []
-  m_RaysPerDirection: 8
+  m_RaysPerDirection: 10
   m_MaxRayDegrees: 180
   m_SphereCastRadius: 0.18
   m_RayLength: 7
@@ -11253,6 +11253,7 @@ GameObject:
   - component: {fileID: 640968033}
   - component: {fileID: 640968035}
   - component: {fileID: 640968037}
+  - component: {fileID: 640968038}
   m_Layer: 6
   m_Name: Character
   m_TagString: Untagged
@@ -11495,8 +11496,8 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 1000
+  playerrb: {fileID: 640968027}
   _enemyStript: {fileID: 1513703507}
-  toGoal: {x: 0, y: 0}
 --- !u!114 &640968034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11574,13 +11575,33 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 640968022}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3c38aa4c4c594946920a42894ef5dd6, type: 3}
+  m_Script: {fileID: 11500000, guid: 015f945c3a333e845a433ad6a7c60511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  test1: 0
-  test2: 
+  objectToSearch: {fileID: 640968022}
+  scriptName: GMTK.PlatformerToolkit.characterMovement
+  rangeNeighbors: 0
+  quantityNeighbors: 0
+--- !u!114 &640968038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640968022}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef81b464272f59479cc7f8378ff1f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  squareSprite: {fileID: 2211429377785674552, guid: 27438030a88d64763a774f2427351b95, type: 3}
+  squarewSprite: {fileID: 7704479438528150483, guid: 27438030a88d64763a774f2427351b95, type: 3}
+  positionEnemy: {fileID: 0}
+  valueX1: -10.5
+  valueX2: 22
+  valueY: 2
 --- !u!1 &646382720
 GameObject:
   m_ObjectHideFlags: 0
@@ -11764,7 +11785,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 799739801}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.995, y: -4, z: -0.1460645}
+  m_LocalPosition: {x: 22.07, y: -4, z: -0.1460645}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -57283,7 +57304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SensorName: RayPerceptionSensorEnemy
   m_DetectableTags: []
-  m_RaysPerDirection: 8
+  m_RaysPerDirection: 10
   m_MaxRayDegrees: 180
   m_SphereCastRadius: 0.18
   m_RayLength: 7
@@ -57690,9 +57711,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   squareSprite: {fileID: 2211429377785674552, guid: 27438030a88d64763a774f2427351b95, type: 3}
   squarewSprite: {fileID: 7704479438528150483, guid: 27438030a88d64763a774f2427351b95, type: 3}
-  valueX1: -15
-  valueX2: 27
-  valueY: -3.47
+  positionEnemy: {fileID: 0}
+  valueX1: -10.5
+  valueX2: 22
+  valueY: -3
 --- !u!114 &1513703508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63843,7 +63865,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SensorName: RayPerceptionSensorWalls
   m_DetectableTags: []
-  m_RaysPerDirection: 8
+  m_RaysPerDirection: 10
   m_MaxRayDegrees: 180
   m_SphereCastRadius: 0
   m_RayLength: 7

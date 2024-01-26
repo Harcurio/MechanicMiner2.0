@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
+using System.Text;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Reflection;
 
@@ -20,6 +21,9 @@ public class Rules : MonoBehaviour
     List<IVariable> variablesList = new List<IVariable>();
     List<IVariable> neighbors = new List<IVariable>();
     IVariable randomVariable;
+    StringBuilder ruleGenerated;
+    //Conditions condition;
+   // Effect effect;
     public float rangeNeighbors;
     public int quantityNeighbors;
 
@@ -31,7 +35,7 @@ public class Rules : MonoBehaviour
 
             if (script != null)
             {
-                Debug.Log($"Found the script '{scriptName}' on the assigned object");
+                //Debug.Log($"Found the script '{scriptName}' on the assigned object");
 
                 Type scriptType = script.GetType();
                 reflectionData = GenerateReflectionData(scriptType, script);
@@ -41,12 +45,21 @@ public class Rules : MonoBehaviour
                 File.WriteAllText(savePath, jsonData);
 
                 Debug.Log($"Reflection data saved at {savePath}");
-                Debug.Log("saving information in variables class");
+                
 
                 //CODE CONTINUES HERE
                 PopulateVariablesList(reflectionData);
-                neighbors = GenerateNeighbors(randomVariable,rangeNeighbors,quantityNeighbors);
+
+                
+                ruleGenerated = GenerateRandomRule();
+
+                Debug.Log("THIS IS THE RULE "+ruleGenerated.ToString());
+                //choose random variable
+                //
+                //neighbors = GenerateNeighbors(randomVariable,rangeNeighbors,quantityNeighbors);
                 //printVariables();// is working...
+
+                //generateRandomRule()
             }
             else
             {
@@ -199,6 +212,11 @@ public class Rules : MonoBehaviour
             Debug.Log($"Name: {variable.Name}, Type: {variable.GetValue().GetType()}, Value: {variable.GetValue()}");
         }
 
+    }
+
+    public void printVariable(IVariable variable) 
+    {
+        Debug.Log($"Name: {variable.Name}, Type: {variable.GetValue().GetType()}, Value: {variable.GetValue()}");
     }
 
     //we can select a random variable to start the generation... 
@@ -393,6 +411,248 @@ public class Rules : MonoBehaviour
 
         return neighbors;
 
+    }
+
+    public StringBuilder GenerateRandomRule()
+    {
+        randomVariable = getRandomVariable();
+        //ComparisonType[] enumComparisonValues = (ComparisonType[])Enum.GetValues(typeof(ComparisonType));
+        //EffectType[] enumEffectValues = (EffectType[])Enum.GetValues(typeof(EffectType));
+        // Conditions randCondition;// = new Conditions();
+        int condition = UnityEngine.Random.Range(0, 6); //possibilities of conditions for this type of variable
+        float valueC = -1f;
+        int efect = UnityEngine.Random.Range(0, 4); // posible conditions that we have excluding bool...
+        float valueE = -1f;
+
+        StringBuilder randomRule = new StringBuilder();
+        
+       
+        //Effect randEffect;
+
+
+
+
+        printVariable(randomVariable);
+
+        //analiza que tipo de variable es
+        if (randomVariable.GetValue().GetType().ToString() == "System.Boolean")
+        {
+
+            randomRule.Append(randomVariable.Name);
+            randomRule.Append(" | ");
+            int Condition = UnityEngine.Random.Range(0, 2); //possibilities of conditions for this type of variable
+            //int valueCondition = UnityEngine.Random.Range(0, 2);
+            Debug.Log("this is a boolean "+ Condition);
+            //obtener una condicion... random? 
+            if(Condition == 0)
+            {
+                //Conditions.IsTrue();
+                randomRule.Append("6");
+                randomRule.Append(" | ");
+                randomRule.Append("4");// effect change bool
+                //randomRule.Append(" | ");
+
+            }
+            else if(Condition == 1){
+                //onditions.IsFalse();
+                randomRule.Append("7");
+                randomRule.Append(" | ");
+                randomRule.Append("4");// effect change bool
+                //randomRule.Append(" | ");
+
+            }
+           
+            // obtener un efecto... random?
+
+
+        }
+        else 
+        {
+            valueE = UnityEngine.Random.Range(1, 11);
+            randomRule.Append(randomVariable.Name);
+            randomRule.Append(" | ");
+            
+             // now from 1 to 10 so it can't be divided by 0
+            Debug.Log("this is not boolean "+condition);
+            //obtener una condicion... random?
+            switch(condition)
+            {
+                case 0: //range
+                    //Conditions.IsInRange();
+                    randomRule.Append(condition.ToString());
+                    randomRule.Append(" | ");
+                    // generate random two values for condition 
+                    if (randomVariable.GetType() is Vector3)
+                    {
+                        //GenerateRandomVector3();
+                        randomRule.Append("vector 3 range");
+                        randomRule.Append(" | ");
+                        Debug.Log("vector 3 range");
+
+                        //adding here the effect
+                        randomRule.Append(efect.ToString());
+                        randomRule.Append(" | ");
+                        randomRule.Append(valueE.ToString());
+
+                    }
+                    else if (randomVariable.GetType() is Vector2)
+                    {
+                        //the variable is a vector so the random needs to be different 
+                        //GenerateRandomVector2();
+                        randomRule.Append("Vector 2 range");
+                        randomRule.Append(" | ");
+                        Debug.Log("Vector 2 range");
+                        //efecto despues 
+                        randomRule.Append(efect.ToString());
+                        randomRule.Append(" | ");
+                        randomRule.Append(valueE.ToString());
+                    }
+                    else 
+                    {
+                        //PROBABLI NEED TO CHANGE THIS....
+                        float value1 = UnityEngine.Random.Range(0, (float)randomVariable.GetValue()+((float)randomVariable.GetValue()/2));
+                        float value2 = UnityEngine.Random.Range(0, (float)randomVariable.GetValue() + ((float)randomVariable.GetValue() / 2));
+                        valueE = UnityEngine.Random.Range(1, 11); // now from 1 to 10 so it can't be divided by 0
+                        if (value1 > value2)
+                        {
+                            randomRule.Append(value2.ToString()+" - "+value1.ToString());
+                            randomRule.Append(" | ");
+                            randomRule.Append(efect.ToString());
+                            randomRule.Append(" | ");
+                            randomRule.Append(valueE.ToString());
+
+                        }
+                        else 
+                        {
+                            randomRule.Append(value1.ToString() + " - " + value2.ToString());
+                            randomRule.Append(" | ");
+                            randomRule.Append(efect.ToString());
+                            randomRule.Append(" | ");
+                            randomRule.Append(valueE.ToString());
+                        }
+                    }
+                    
+                    break;
+                case 1: //equal
+                    //Conditions.IsEqual();
+
+                    randomRule.Append(condition.ToString());
+                    randomRule.Append(" | ");
+                    // generate random value to compare in condition and save it 
+                    //#STILL NEED TO CHECK THIS...
+
+                    int val1 = (int)randomVariable.GetValue();
+                    int val2 = (int)randomVariable.GetValue() / 2;
+                    int val3 = val1 + val2;
+                    valueC = UnityEngine.Random.Range(0, val3);
+                    randomRule.Append(valueC.ToString());
+                    randomRule.Append(" | ");
+                    //efecto
+                    randomRule.Append(efect.ToString());
+                    randomRule.Append(" | ");
+                    randomRule.Append(valueE.ToString());
+                    break;
+                case 2: //lestahan
+                    //Conditions.IsLessThan();
+                    randomRule.Append(condition.ToString());
+                    randomRule.Append(" | ");
+                    // generate random value to compare in condition and save it 
+
+                    
+                    val1 = (int)randomVariable.GetValue();
+                    val2 = (int)randomVariable.GetValue() / 2;
+                    val3 = val1 + val2;
+                    valueC = UnityEngine.Random.Range(0, val3);
+                    //valueC = UnityEngine.Random.Range(0, (float)randomVariable.GetValue() + ((float)randomVariable.GetValue() / 2));
+                    randomRule.Append(valueC.ToString());
+                    randomRule.Append(" | ");
+
+                    //generate effect
+                    randomRule.Append(efect.ToString());
+                    randomRule.Append(" | ");
+                    randomRule.Append(valueE.ToString());
+                    break;
+                case 3://greaterthan
+                    //Conditions.IsGreaterThan();
+                    randomRule.Append(condition.ToString());
+                    randomRule.Append(" | ");
+                    // generate random value to compare in condition and save it
+                    val1 = (int)randomVariable.GetValue();
+                    val2 = (int)randomVariable.GetValue() / 2;
+                    val3 = val1 + val2;
+                    valueC = UnityEngine.Random.Range(0, val3);
+                    //valueC = UnityEngine.Random.Range(0, (float)randomVariable.GetValue() + ((float)randomVariable.GetValue() / 2));
+                    randomRule.Append(valueC.ToString());
+                    randomRule.Append(" | ");
+                    //generate random effect 
+                    randomRule.Append(efect.ToString());
+                    randomRule.Append(" | ");
+                    randomRule.Append(valueE.ToString());
+
+                    break;
+                case 4://less than or equal
+                    //Conditions.IsLessThanOrEqual();
+                    randomRule.Append(condition.ToString());
+                    randomRule.Append(" | ");
+                    // generate random value to compare in condition and save it 
+
+                    val1 = (int)randomVariable.GetValue();
+                    val2 = (int)randomVariable.GetValue() / 2;
+                    val3 = val1 + val2;
+                    valueC = UnityEngine.Random.Range(0, val3);
+                    //valueC = UnityEngine.Random.Range(0, (float)randomVariable.GetValue() + ((float)randomVariable.GetValue() / 2));
+                    randomRule.Append(valueC.ToString());
+                    randomRule.Append(" | ");
+                    //well is not generate adding random efect
+                    randomRule.Append(efect.ToString());
+                    randomRule.Append(" | ");
+                    randomRule.Append(valueE.ToString());
+                    break;
+                case 5://greater than or equal
+                    //Conditions.IsGreaterThanOrEqual();
+                    randomRule.Append(condition.ToString());
+                    randomRule.Append(" | ");
+                    // generate random value to compare in condition and save it 
+                    val1 = (int)randomVariable.GetValue();
+                    val2 = (int)randomVariable.GetValue() / 2;
+                    val3 = val1 + val2;
+                    valueC = UnityEngine.Random.Range(0, val3);
+                    //valueC = UnityEngine.Random.Range(0, (float)randomVariable.GetValue() + ((float)randomVariable.GetValue() / 2));
+                    randomRule.Append(valueC.ToString());
+                    randomRule.Append(" | ");
+                    //generate random effect 
+                    randomRule.Append(efect.ToString());
+                    randomRule.Append(" | ");
+                    randomRule.Append(valueE.ToString());
+                    break;
+                default: //...
+
+                    break;
+            }
+            // obtener un efecto... random?
+
+        }
+
+
+        return randomRule;
+
+    }
+
+    public static Vector3 GenerateRandomVector3(float minX, float maxX, float minY, float maxY, float minZ, float maxZ)
+    {
+        float randomX = UnityEngine.Random.Range(minX, maxX);
+        float randomY = UnityEngine.Random.Range(minY, maxY);
+        float randomZ = UnityEngine.Random.Range(minZ, maxZ);
+
+        return new Vector3(randomX, randomY, randomZ);
+    }
+
+    public static Vector2 GenerateRandomVector2(float minX, float maxX, float minY, float maxY)
+    {
+        float randomX = UnityEngine.Random.Range(minX, maxX);
+        float randomY = UnityEngine.Random.Range(minY, maxY);
+
+        return new Vector2(randomX, randomY);
     }
 
 }

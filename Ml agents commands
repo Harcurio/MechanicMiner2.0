@@ -9,6 +9,14 @@ mlagents-learn C:\Users\Johor\results\configuration.yaml --env=C:\Users\Johor\bm
 
 mlagents-learn C:\Users\Johor\results\configuration.yaml --env=C:\Users\Johor\bmm\mm2 --time-scale=1 --num-envs=5 --run-id=test22 --resume
 
+###################FOR BMM2 New environment
+mlagents-learn C:\Users\Johor\results\configuration.yaml --env=C:\Users\Johor\bmm2\mm2 --time-scale=1 --num-envs=5 --run-id=test36 --resume
+
+
+###################FOR BMM3 New environment wait 30 episodes to change enemy...
+mlagents-learn C:\Users\Johor\results\configuration.yaml --env=C:\Users\Johor\bmm3\mm2 --time-scale=1 --num-envs=5 --run-id=test37
+
+
 mlagents-learn --time-scale=1 --force
 
 mlagents-learn config/ppo/3DBall.yaml --run-id=first3DBallRun

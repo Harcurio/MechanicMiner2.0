@@ -2,17 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+public enum ComparisonType
+{
+    IsInRange,
+    IsEqual,
+    IsLessThan,
+    IsGreaterThan,
+    IsLessThanOrEqual,
+    IsGreaterThanOrEqual,
+    IsTrue, //0
+    IsFalse //1
+}
 
 public class Conditions
 {
 
     // NEW CODE august 2023
 
+    
 
     ///In this moment is not possible to compare between different type of variables just int vs int float vs float etc.
     /// in case that this will be needed is possible to add this new cases...
-   
+
     //Integer comparison methods
     #region Integer Comparisons
     public static bool IsInRange(Variable<int> variable, int minValue, int maxValue) 
@@ -308,7 +319,8 @@ public class Conditions
     }
 
     #endregion
-    // Transform and Vector comparison methods
+    // TRansform and Vector comparison methods
+    // THIS WILL BE CHANGED ALL FOR VECTOR3 SO...
     #region Transform and Vector Comparisons
 
     public static bool IsPositionEqual(Variable<Transform> variable, Transform transform)

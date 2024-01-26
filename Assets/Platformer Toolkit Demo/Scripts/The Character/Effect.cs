@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+
+public enum EffectType
+{
+    Add,
+    Subtract,
+    Multiply,
+    Divide,
+    ChangeBool,
+}
 public class Effect
 {
-    public enum EffectType
-    {
-        Add,
-        Subtract,
-        Multiply,
-        Divide,
-        ChangeBool,
-        MovePosition
-    }
+    
 
     public static void ApplyEffect(ref Variable<int> variable, EffectType effectType, int value)
     {
@@ -45,11 +46,12 @@ public class Effect
         ApplyVectorEffect(ref variable, effectType, value);
     }
 
+    /*
     public static void ApplyEffect(ref Variable<Transform> variable, EffectType effectType, Transform value)
     {
         ApplyTransformEffect(ref variable, effectType, value);
     }
-
+    */
     private static void ApplyArithmeticEffect(ref Variable<int> variable, EffectType effectType, int value)
     {
         switch (effectType)
@@ -165,6 +167,8 @@ public class Effect
         }
     }
 
+    /*
+     * THIS CODE IS GONNA BE SPLITED INTO 3 DIFFERENT VARIABLES... VECTOR3 ALL OF THEM
     private static void ApplyTransformEffect(ref Variable<Transform> variable, EffectType effectType, Transform value)
     {
         Transform dynamicVariableValue = variable.Value;
@@ -185,5 +189,5 @@ public class Effect
                 Debug.LogWarning("Effect not supported for Transform variables.");
                 break;
         }
-    }
+    }*/
 }
