@@ -9,6 +9,10 @@ using Unity.MLAgents.Sensors;
 
 public class MoveToGoalAgent : Agent
 {
+    private bool colisionOcurrida = false;
+    private Vector2 player;
+    private Vector2 enemy;
+
 
     characterMovement _moveScript;
     characterJump _jumpScript;
@@ -36,7 +40,7 @@ public class MoveToGoalAgent : Agent
     //string filePath = Application.persistentDataPath + ;
     playerData logsPlayer;
     int goal_reached = 0;
-    int killed = 0;
+    //int killed = 0;
 
     void Awake()
     {
@@ -91,7 +95,7 @@ public class MoveToGoalAgent : Agent
         Debug.Log("logs saved at " + savePath);
     }
     
-    public void UpdateJSON(bool won)
+    public void UpdateJSON(bool won, Vector2 enemy, Vector2 player)
     {
         string savePath = Path.Combine(Application.dataPath, name_file);
 
@@ -111,9 +115,9 @@ public class MoveToGoalAgent : Agent
                 logsPlayer.times_won.Add(0);
             }
 
-            Vector2 _tem = new Vector2(_enemyStript.test.transform.position.x, _enemyStript.test.transform.position.y);
+            //Vector2 enemy = new Vector2(_enemyStript.test.transform.position.x, _enemyStript.test.transform.position.y);
             Vector2 _tem1 = new Vector2(transform.position.x, transform.position.y);
-            Vector2 _tem2 = new Vector2(_newmov.true_location.x, _newmov.true_location.y);
+            //Vector2 player = new Vector2(_newmov.true_location.x, _newmov.true_location.y);
             //Vector2 _tem3 = new Vector2(_newmov.old_location.x, _newmov.old_location.y);
             Vector2 tran_tem = _enemyStript.positionEnemy.position - transform.position;
 
@@ -129,14 +133,14 @@ public class MoveToGoalAgent : Agent
 
 
             //Vector2 relative_velocity = 
-            Vector2 localenemy = _tem - _tem2;
-            Vector2 localplayer = _tem2 - posicionEnemigo;
+            Vector2 localenemy = enemy - player;
+            Vector2 localplayer = player - enemy;
 
 
             
             
-            Debug.Log("enemy" + _tem);
-            Debug.Log("player" + _tem2.ToString());
+            //Debug.Log("enemy" + enemy);
+            Debug.Log("player" + player.ToString());
             Debug.Log("enemynew" + posicionEnemigo.ToString());
             Debug.Log("local pos" + localplayer);
 
@@ -147,7 +151,7 @@ public class MoveToGoalAgent : Agent
 
             string updatedJson = JsonUtility.ToJson(logsPlayer);
             File.WriteAllText(savePath, updatedJson);
-            Debug.Log("JSON data updated and saved.");
+            //Debug.Log("JSON data updated and saved.");
         }
     }
     
@@ -260,7 +264,7 @@ public class MoveToGoalAgent : Agent
 
     }
     
-
+    /*
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Goal")) 
@@ -286,6 +290,75 @@ public class MoveToGoalAgent : Agent
             EndEpisode();
         }
     }
+    */
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+
+
+        colisionOcurrida = true;
+
+        // Pausar la ejecución y leer las posiciones de los objetos
+        //StartCoroutine(LeerPosicionesYContinuar(collision.transform, transform));
+
+
+        Vector2 collisionPosition = collision.contacts[0].point;
+        enemy = collision.transform.position;
+        player = transform.position;
+
+        
+
+        
+        // Verifica si el objeto que colisionó tiene el tag deseado
+        if (collision.gameObject.CompareTag("Enemy")  )
+        {
+
+            Debug.Log("Posición de colisión con el tag" + collisionPosition);
+            Debug.Log("player pos" + player);
+            Debug.Log("enemy pos" + enemy);
+            Vector2 localpos = player - enemy;
+
+            Debug.Log("local pos" + localpos);
+
+
+            // Imprime la posición en consola
+            //Debug.Log("Posición de colisión con el tag" + collisionPosition);
+            //Debug.Log("Posición del objeto con el que chocaste: " + enemy);
+
+            SetReward(-1f);
+            Debug.Log("muerte");
+            EndEpisode();
+            //UpdateJSON(false, enemy, player);
+            
+
+        } else if (collision.gameObject.CompareTag("Goal")) 
+        {
+
+
+            // Imprime la posición en consola
+            //Debug.Log("Posición de colisión con el tag" + collisionPosition);
+            //Debug.Log("Posición del objeto con el que chocaste: " + enemy);
+            Debug.Log("Posición de colisión con el tag" + collisionPosition);
+            Debug.Log("player pos" + player);
+            Debug.Log("enemy pos" + enemy);
+            Vector2 localpos = player - enemy;
+
+            Debug.Log("local pos" + localpos);
+
+            goal_reached++;
+            SetReward(+5f);
+            Debug.Log("goal reached.");
+            EndEpisode();
+            //UpdateJSON(true, enemy, player);
+            
+
+        }
+        
+    }
+
+
+
+  
+
 
 
 

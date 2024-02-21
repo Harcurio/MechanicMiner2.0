@@ -56,6 +56,9 @@ public class EnemyGrammar : MonoBehaviour
            // GenerateEnemy();
         }
         parentObject = new GameObject("Parent");
+
+
+        
         //Debug.Log(result);
 
         //result = "hlre";
@@ -85,6 +88,13 @@ public class EnemyGrammar : MonoBehaviour
         {
             // Destroy each child GameObject
             Destroy(child.gameObject);
+            
+        }
+        FixedJoint2D[] fixedJoints = parentObject.GetComponentsInChildren<FixedJoint2D>();
+        foreach (FixedJoint2D fixedJoint in fixedJoints)
+        {
+            // Destruir el FixedJoint2D
+            Destroy(fixedJoint);
         }
 
         result = GenerateString();
@@ -110,6 +120,13 @@ public class EnemyGrammar : MonoBehaviour
             // Destroy each child GameObject
             Destroy(child.gameObject);
         }
+        FixedJoint2D[] fixedJoints = parentObject.GetComponentsInChildren<FixedJoint2D>();
+        foreach (FixedJoint2D fixedJoint in fixedJoints)
+        {
+            // Destruir el FixedJoint2D
+            Destroy(fixedJoint);
+        }
+
         loadGrammar();
         generatePositions(result); // grupos
         generateBody();     //posiciones y body?
@@ -445,6 +462,10 @@ public class EnemyGrammar : MonoBehaviour
 
         JoinObjects(parentObject, mainSquare);
 
+
+
+
+
         GameObject previousObject = mainSquare;
         //Vector2 targetVector = new Vector2(0f, -1f); // vector hacia abajo 
 
@@ -519,7 +540,7 @@ public class EnemyGrammar : MonoBehaviour
 
         // Añade un componente BoxCollider2D al GameObject
         BoxCollider2D boxCollider = square.AddComponent<BoxCollider2D>();
-        boxCollider.isTrigger = true;
+        //boxCollider.isTrigger = true;
 
         // Ajusta la posición del cuadro
         square.transform.position = position;
@@ -539,9 +560,10 @@ public class EnemyGrammar : MonoBehaviour
         {
             EnemyMovement myScriptComponent = square.AddComponent<EnemyMovement>();
             EnemyLocation enemyLocation = square.AddComponent<EnemyLocation>();
-            
+            //EnemyMovement myScriptComponent1 = parentObject.AddComponent<EnemyMovement>();
             //Debug.Log("removimos movimiento");
             test = square.GetComponent<EnemyMovement>();
+            //test = parentObject.GetComponent<EnemyMovement>();
             enemyl = square.GetComponent<EnemyLocation>();
         }
 
@@ -572,7 +594,7 @@ public class EnemyGrammar : MonoBehaviour
 
         // Añade un componente BoxCollider2D al GameObject
         BoxCollider2D boxCollider = square.AddComponent<BoxCollider2D>();
-        boxCollider.isTrigger = true;
+        //boxCollider.isTrigger = true;
 
         // Ajusta la posición del cuadro
         square.transform.position = position;

@@ -51,9 +51,9 @@ public class Rules : MonoBehaviour
                 PopulateVariablesList(reflectionData);
 
                 
-                ruleGenerated = GenerateRandomRule();
+                //ruleGenerated = GenerateRandomRule(); /// ************
 
-                Debug.Log("THIS IS THE RULE "+ruleGenerated.ToString());
+                //Debug.Log("THIS IS THE RULE "+ruleGenerated.ToString()); // ******************
                 //choose random variable
                 //
                 //neighbors = GenerateNeighbors(randomVariable,rangeNeighbors,quantityNeighbors);
@@ -413,6 +413,7 @@ public class Rules : MonoBehaviour
 
     }
 
+    /*
     public StringBuilder GenerateRandomRule()
     {
         randomVariable = getRandomVariable();
@@ -637,7 +638,7 @@ public class Rules : MonoBehaviour
         return randomRule;
 
     }
-
+    */
     public static Vector3 GenerateRandomVector3(float minX, float maxX, float minY, float maxY, float minZ, float maxZ)
     {
         float randomX = UnityEngine.Random.Range(minX, maxX);
