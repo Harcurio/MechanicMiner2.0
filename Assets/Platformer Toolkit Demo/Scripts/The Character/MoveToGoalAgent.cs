@@ -12,13 +12,14 @@ public class MoveToGoalAgent : Agent
 
     characterMovement _moveScript;
     characterJump _jumpScript;
+    movement _newmov; //correction of the movement ? by optaining the movement from other place...
     characterJuice _juice_script;
-    EnemyMovement _enemyMoveScript;
+
 
     public Rigidbody2D playerrb;
     //public Rigidbody2D enemyrb; 
     
-    public EnemyGrammar _enemyStript;
+    public EnemyGrammar _enemyStript; //script!! 
 
     //GameOject _goalScript;
     GameObject _goal;
@@ -42,7 +43,8 @@ public class MoveToGoalAgent : Agent
         _moveScript = GetComponent<characterMovement>();
         _jumpScript = GetComponent<characterJump>();
         _juice_script = GetComponent<characterJuice>();
-        //_enemyMoveScript = GetComponent<EnemyMovement>();
+        _newmov = GetComponent<movement>();
+        
         //playerrb = GetComponent<>();
         //_enemyStript = GetComponent<EnemyGrammar>();
         //_goal = GetComponent<Goal>();
@@ -109,19 +111,34 @@ public class MoveToGoalAgent : Agent
                 logsPlayer.times_won.Add(0);
             }
 
-            Vector2 _tem = new Vector2(_enemyStript.positionEnemy.position.x, _enemyStript.positionEnemy.position.y);
+            Vector2 _tem = new Vector2(_enemyStript.test.transform.position.x, _enemyStript.test.transform.position.y);
             Vector2 _tem1 = new Vector2(transform.position.x, transform.position.y);
+            Vector2 _tem2 = new Vector2(_newmov.true_location.x, _newmov.true_location.y);
+            //Vector2 _tem3 = new Vector2(_newmov.old_location.x, _newmov.old_location.y);
             Vector2 tran_tem = _enemyStript.positionEnemy.position - transform.position;
 
 
             Vector2 velocityplayer = playerrb.velocity;
             Vector2 velocityrelativeplayer = velocityplayer - _enemyStript.test.localVelocity;
-            Debug.Log("Local Velocity: " + _enemyStript.test.localVelocity);
-            Debug.Log("local velocity player"+ velocityrelativeplayer);
+            //Debug.Log("Local Velocity: " + _enemyStript.test.localVelocity);
+            //Debug.Log("local velocity player"+ velocityrelativeplayer);
+
+
+
+            Vector2 posicionEnemigo = EnemyLocation.Instancia.ObtenerPosicionEnemigo();
+
 
             //Vector2 relative_velocity = 
-            Vector2 localenemy = _tem - _tem1;
-            Vector2 localplayer = _tem1 - _tem;
+            Vector2 localenemy = _tem - _tem2;
+            Vector2 localplayer = _tem2 - posicionEnemigo;
+
+
+            
+            
+            Debug.Log("enemy" + _tem);
+            Debug.Log("player" + _tem2.ToString());
+            Debug.Log("enemynew" + posicionEnemigo.ToString());
+            Debug.Log("local pos" + localplayer);
 
             logsPlayer.local_position_enemy.Add(localenemy);
             logsPlayer.local_position_player.Add(localplayer);
@@ -246,25 +263,13 @@ public class MoveToGoalAgent : Agent
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        /*
-        if (collision.TryGetComponent<Goal>(out Goal goal)) 
-        {
-            SetReward(+1f);
-            EndEpisode();
-        }
-        */
         if (collision.CompareTag("Goal")) 
         {
-            //Debug.Log("player pos" + transform.position.ToString());
-            //Debug.Log("enemy pos" + _enemyStript.positionEnemy.position.ToString());
-            Debug.Log("goal reached.");
-            //Debug.Log(_enemyMoveScript.goRight);
             goal_reached++;
             UpdateJSON(true);
             SetReward(+5f);
+            Debug.Log("goal reached.");
             EndEpisode();
-
-            
         }
 
         if (collision.CompareTag("Wall")) 
@@ -275,12 +280,9 @@ public class MoveToGoalAgent : Agent
 
         if (collision.CompareTag("Enemy"))
         {
-            Debug.Log("muerte");
-            //Debug.Log("player pos"+transform.position.ToString());
-            //Debug.Log("enemy pos"+_enemyStript.positionEnemy.position.ToString());          
-            killed++;
             UpdateJSON(false);
             SetReward(-1f);
+            Debug.Log("muerte");
             EndEpisode();
         }
     }

@@ -26,11 +26,13 @@ public class EnemyGrammar : MonoBehaviour
 
     private string result { get; set; }
     string projectPath;
-
+    public Transform positionEnemy;
     public EnemyMovement test;
 
+    public EnemyLocation enemyl; // enemy location
+
     //parent object 
-    public Transform positionEnemy;
+    
     GameObject parentObject;
 
     [SerializeField] public float valueX1;//range 1 of the spawn for x
@@ -434,7 +436,7 @@ public class EnemyGrammar : MonoBehaviour
         //BoxCollider2D boxCollider = parentObject.AddComponent<BoxCollider2D>();
 
         //la posicion del objeto vacio es igual a la del objeto parent
-        parentObject.transform.position = transform.localPosition;
+        parentObject.transform.position = transform.position;
         // Genera el cuadro principal
         Vector2 localPosition = transform.localPosition;
         GameObject mainSquare = GenerateSquare(localPosition, Vector2.one, parentObject.transform, -1);
@@ -536,8 +538,11 @@ public class EnemyGrammar : MonoBehaviour
         if (i == -1)
         {
             EnemyMovement myScriptComponent = square.AddComponent<EnemyMovement>();
+            EnemyLocation enemyLocation = square.AddComponent<EnemyLocation>();
+            
             //Debug.Log("removimos movimiento");
             test = square.GetComponent<EnemyMovement>();
+            enemyl = square.GetComponent<EnemyLocation>();
         }
 
         return square;
